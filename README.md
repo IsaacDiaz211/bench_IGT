@@ -1,0 +1,88 @@
+# bench_IGT
+
+Benchmark independiente para comparar modelos de OpenRouter en las tareas que
+generan el contenido lingüístico de la aplicación móvil Leyéndolo:
+
+- Traducción natural.
+- Glosas morfológicas compatibles con el formato de la aplicación.
+- Puntos gramaticales y sus explicaciones.
+
+El benchmark se ejecuta en PC y no forma parte de la aplicación Expo/React
+Native. Su finalidad es seleccionar los modelos que proporcionen la mejor
+experiencia de usuario en la aplicación real.
+
+## Alcance
+
+- Pares de idiomas iniciales: inglés → español y chino → español.
+- La segmentación no se evalúa. Los casos del dataset contienen las oraciones
+  ya separadas para poder reproducir los lotes que usa la aplicación.
+- La salida debe cumplir los esquemas JSON que consume la aplicación.
+- La comparación principal se hace modelo por modelo, sin fallback, para medir
+  la calidad y el coste propios de cada candidato.
+- Después de la comparación individual se podrá simular una cadena de fallback
+  para estimar el comportamiento de una configuración de producción.
+- DeepSeek Flash v4-0731 y GPT5.6-Luna se usarán como jueces de calidad, no como
+  modelos candidatos.
+
+La especificación completa está en
+[`docs/benchmark-spec.md`](docs/benchmark-spec.md).
+
+## Qué se mide
+
+- Calidad de la traducción natural.
+- Calidad y corrección de las glosas.
+- Calidad de los puntos gramaticales.
+- Tasa de respuestas válidas y completas.
+- Tasa de errores, timeouts y reintentos.
+- Latencia total y por etapa.
+- Tokens utilizados y coste real de las generaciones.
+- Acuerdo y divergencia entre los dos modelos jueces.
+
+La calidad no se reducirá inicialmente a una única cifra arbitraria. Los
+informes mostrarán primero las métricas por idioma y por etapa; después se
+aplicarán umbrales de calidad y fiabilidad antes de comparar latencia y coste.
+
+## Relación con la aplicación
+
+La referencia funcional está en el proyecto hermano
+[`ravenToPandas`](../ravenToPandas). En particular:
+
+- `services/OpenRouterTranslation.ts` define los prompts, esquemas y validación
+  de traducción, glosa y gramática.
+- La glosa usa `surface` y `gloss`; para lenguas logográficas también usa
+  `reading`.
+- Las respuestas de glosa se agrupan en lotes de hasta cuatro oraciones.
+- Los puntos gramaticales se devuelven en `points`, con un máximo de dos
+  elementos.
+
+El benchmark conservará una versión de los prompts y esquemas utilizados en
+cada ejecución. Si la aplicación cambia ese contrato, se creará una nueva
+versión del benchmark en lugar de comparar silenciosamente resultados
+incompatibles.
+
+## Estado
+
+La documentación y el formato metodológico están definidos. La implementación
+de la CLI, el dataset y los informes se incorporarán en pasos posteriores.
+
+## Estructura prevista
+
+```text
+bench_IGT/
+├── datasets/
+│   ├── cases.jsonl
+│   └── references.jsonl
+├── docs/
+│   └── benchmark-spec.md
+├── prompts/
+├── results/
+├── src/
+├── .env.example
+└── README.md
+```
+
+## Seguridad
+
+La herramienta usará una clave directa de OpenRouter en el ordenador. Nunca se
+debe guardar una clave en el dataset, en respuestas versionadas ni en los
+informes. La variable prevista será `OPENROUTER_API_KEY`.
