@@ -58,6 +58,10 @@ lo contrario:
 - Cabeceras de identificación de la aplicación, sin incluir secretos en los
   artefactos guardados.
 
+Las plantillas se versionan en `prompts/`. `prompts/VERSION` se copia al
+manifiesto de cada ejecución para impedir que resultados de distintas versiones
+de prompt se comparen sin advertencia.
+
 El benchmark no usará la cadena de fallback durante la comparación directa.
 Cada candidato recibirá la misma petición y sus fallos quedarán registrados.
 Esto evita que un candidato parezca fiable porque otro modelo corrigió su
@@ -295,6 +299,9 @@ convertirá un coste desconocido en cero silenciosamente.
 Se informará cada tasa por modelo, idioma y etapa. No se ocultarán respuestas
 válidas estructuralmente pero incorrectas lingüísticamente.
 
+La implementación separa estas métricas en módulos independientes bajo
+`src/metrics/`: coste, latencia, fiabilidad, tokens y calidad.
+
 ### 6.2. Rendimiento y coste
 
 - Latencia media, mediana, `p95` y máxima.
@@ -463,6 +470,9 @@ El manifiesto incluirá:
 Las respuestas originales se conservarán para poder auditar una puntuación o
 reproducir el informe. Nunca se almacenarán cabeceras `Authorization` ni
 claves API.
+
+Las pruebas automatizadas usan directorios temporales y no escriben en
+`results/`. Esa carpeta queda reservada para ejecuciones reales.
 
 ## 10. Estructura prevista del repositorio
 

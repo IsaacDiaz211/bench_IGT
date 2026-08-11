@@ -5,8 +5,11 @@ import type {
   CandidateSummary,
   Stage,
 } from '../core/types.ts';
-import { asNumber, mean, median, percentile } from '../core/utils.ts';
 import { mergeCostSummaries, summarizeCost } from '../metrics/cost.ts';
+import { summarizeStageLatency } from '../metrics/latency.ts';
+import { summarizeJudgeScores } from '../metrics/quality.ts';
+import { summarizeStageReliability } from '../metrics/reliability.ts';
+import { summarizeTokens } from '../metrics/tokens.ts';
 
 const stages: Stage[] = ['translation', 'gloss', 'grammar'];
 
@@ -22,68 +25,42 @@ const callsForJudges = (run: BenchmarkRun, candidateModel: string): CallResult[]
   );
 };
 
-const stageLatencies = (run: BenchmarkRun, candidateModel: string, stage: Stage): number[] => {
-  return run.candidateRuns
-    .filter((candidateRun) => candidateRun.candidateModel === candidateModel)
-    .map((candidateRun) => {
-      const calls = candidateRun.calls.filter((call) => call.stage === stage);
-      return calls.reduce((maximum, call) => Math.max(maximum, call.latencyMs), 0);
-    });
-};
-
 const buildCandidateSummary = (run: BenchmarkRun, candidateModel: string): CandidateSummary => {
   const candidateRuns = run.candidateRuns.filter(
     (candidateRun) => candidateRun.candidateModel === candidateModel,
   );
   const candidateCalls = callsForCandidate(run, candidateModel);
   const judgeCalls = callsForJudges(run, candidateModel);
-  const validRate = Object.fromEntries(
-    stages.map((stage) => {
-      const validCount = candidateRuns.filter(
-        (candidateRun) => candidateRun.stages[stage].valid,
-      ).length;
-      return [stage, candidateRuns.length ? validCount / candidateRuns.length : 0];
-    }),
-  ) as Record<Stage, number>;
+  const candidateJudgeRecords = run.judgeRecords.filter(
+    (record) => record.candidateModel === candidateModel,
+  );
+  const reliability = Object.fromEntries(
+    stages.map((stage) => [stage, summarizeStageReliability(candidateRuns, candidateCalls, stage)]),
+  ) as CandidateSummary['reliability'];
   const latencyMs = Object.fromEntries(
-    stages.map((stage) => {
-      const values = stageLatencies(run, candidateModel, stage);
-      return [stage, { mean: mean(values), median: median(values), p95: percentile(values, 95) }];
-    }),
+    stages.map((stage) => [stage, summarizeStageLatency(candidateRuns, stage)]),
   ) as CandidateSummary['latencyMs'];
+  const tokenUsage = Object.fromEntries(
+    stages.map((stage) => [
+      stage,
+      summarizeTokens(candidateCalls.filter((call) => call.stage === stage)),
+    ]),
+  ) as CandidateSummary['tokenUsage'];
   const judgeScores = Object.fromEntries(
-    stages.map((stage) => {
-      const scores = run.judgeRecords
-        .filter(
-          (record) =>
-            record.candidateModel === candidateModel && record.stage === stage && record.valid,
-        )
-        .map((record) => {
-          const result = record.result;
-          if (!result || typeof result !== 'object' || Array.isArray(result)) {
-            return undefined;
-          }
-          const scores = (result as { scores?: unknown }).scores;
-          if (!scores || typeof scores !== 'object' || Array.isArray(scores)) {
-            return undefined;
-          }
-          return asNumber((scores as { overall?: unknown }).overall);
-        })
-        .filter((score): score is number => score !== undefined);
-      return [stage, { mean: mean(scores), count: scores.length }];
-    }),
+    stages.map((stage) => [stage, summarizeJudgeScores(candidateJudgeRecords, stage)]),
   ) as CandidateSummary['judgeScores'];
-
   const candidateCost = summarizeCost(candidateCalls);
   const judgeCost = summarizeCost(judgeCalls);
+
   return {
     candidateModel,
     runCount: candidateRuns.length,
     candidateCost,
     judgeCost,
     totalCost: mergeCostSummaries(candidateCost, judgeCost),
-    validRate,
+    reliability,
     latencyMs,
+    tokenUsage,
     judgeScores,
   };
 };
@@ -140,15 +117,34 @@ export const renderMarkdownReport = (run: BenchmarkRun, report: BenchmarkReport)
 
   lines.push(
     '',
-    '## Calidad y fiabilidad por modelo',
+    '## Fiabilidad por modelo',
     '',
-    '| Modelo | Traducción válida | Glosa válida | Gramática válida | Traducción juez | Glosa juez | Gramática juez |',
-    '| --- | ---: | ---: | ---: | ---: | ---: | ---: |',
+    '| Modelo | Etapa | Salida válida | Transporte OK | Llamadas fallidas | Timeouts |',
+    '| --- | --- | ---: | ---: | ---: | ---: |',
   );
   for (const summary of report.candidateSummaries) {
-    lines.push(
-      `| ${summary.candidateModel} | ${formatPercent(summary.validRate.translation)} | ${formatPercent(summary.validRate.gloss)} | ${formatPercent(summary.validRate.grammar)} | ${summary.judgeScores.translation.mean.toFixed(2)} (${summary.judgeScores.translation.count}) | ${summary.judgeScores.gloss.mean.toFixed(2)} (${summary.judgeScores.gloss.count}) | ${summary.judgeScores.grammar.mean.toFixed(2)} (${summary.judgeScores.grammar.count}) |`,
-    );
+    for (const stage of stages) {
+      const reliability = summary.reliability[stage];
+      lines.push(
+        `| ${summary.candidateModel} | ${stage} | ${formatPercent(reliability.validRate)} | ${formatPercent(reliability.transportSuccessRate)} | ${reliability.failedCalls} | ${reliability.timeoutCalls} |`,
+      );
+    }
+  }
+
+  lines.push(
+    '',
+    '## Calidad de jueces',
+    '',
+    '| Modelo | Etapa | Media | Evaluaciones | Desacuerdo medio | Casos comparados |',
+    '| --- | --- | ---: | ---: | ---: | ---: |',
+  );
+  for (const summary of report.candidateSummaries) {
+    for (const stage of stages) {
+      const quality = summary.judgeScores[stage];
+      lines.push(
+        `| ${summary.candidateModel} | ${stage} | ${quality.mean.toFixed(2)} | ${quality.count} | ${quality.disagreementMean.toFixed(2)} | ${quality.disagreementCount} |`,
+      );
+    }
   }
 
   lines.push(
@@ -163,6 +159,22 @@ export const renderMarkdownReport = (run: BenchmarkRun, report: BenchmarkReport)
       const latency = summary.latencyMs[stage];
       lines.push(
         `| ${summary.candidateModel} | ${stage} | ${latency.mean.toFixed(0)} ms | ${latency.median.toFixed(0)} ms | ${latency.p95.toFixed(0)} ms |`,
+      );
+    }
+  }
+
+  lines.push(
+    '',
+    '## Tokens por etapa',
+    '',
+    '| Modelo | Etapa | Entrada | Salida | Total | Cache leído | Cache escrito |',
+    '| --- | --- | ---: | ---: | ---: | ---: | ---: |',
+  );
+  for (const summary of report.candidateSummaries) {
+    for (const stage of stages) {
+      const tokens = summary.tokenUsage[stage];
+      lines.push(
+        `| ${summary.candidateModel} | ${stage} | ${tokens.promptTokens} | ${tokens.completionTokens} | ${tokens.totalTokens} | ${tokens.cachedTokens} | ${tokens.cacheWriteTokens} |`,
       );
     }
   }

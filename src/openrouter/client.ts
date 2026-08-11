@@ -108,6 +108,9 @@ const extractUsage = (body: unknown): UsageSnapshot => {
   }
 
   const usage = body.usage;
+  const promptTokenDetails = isRecord(usage.prompt_tokens_details)
+    ? usage.prompt_tokens_details
+    : undefined;
   return {
     promptTokens: firstNumber(usage.prompt_tokens, usage.promptTokens, usage.tokensPrompt),
     completionTokens: firstNumber(
@@ -121,7 +124,19 @@ const extractUsage = (body: unknown): UsageSnapshot => {
       usage.reasoningTokens,
       usage.nativeTokensReasoning,
     ),
-    cachedTokens: firstNumber(usage.cached_tokens, usage.cachedTokens, usage.nativeTokensCached),
+    cachedTokens: firstNumber(
+      usage.cached_tokens,
+      usage.cachedTokens,
+      usage.nativeTokensCached,
+      promptTokenDetails?.cached_tokens,
+      promptTokenDetails?.cachedTokens,
+    ),
+    cacheWriteTokens: firstNumber(
+      usage.cache_write_tokens,
+      usage.cacheWriteTokens,
+      promptTokenDetails?.cache_write_tokens,
+      promptTokenDetails?.cacheWriteTokens,
+    ),
     costUsd: firstNumber(usage.cost, usage.total_cost, usage.totalCost),
   };
 };

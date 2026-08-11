@@ -1,4 +1,7 @@
 import { afterEach, describe, expect, test } from 'bun:test';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import type { AppConfig } from '../src/core/config.ts';
 import { loadConfig } from '../src/core/config.ts';
 import { runBenchmark } from '../src/execution/runner.ts';
@@ -6,6 +9,7 @@ import { OpenRouterClient } from '../src/openrouter/client.ts';
 
 const originalFetch = globalThis.fetch;
 let generationCounter = 0;
+const temporaryDirectories: string[] = [];
 
 const mockFetch = async (input: string | URL | Request, init?: RequestInit): Promise<Response> => {
   const url = String(input);
@@ -80,14 +84,21 @@ const mockFetch = async (input: string | URL | Request, init?: RequestInit): Pro
   );
 };
 
-afterEach(() => {
+afterEach(async () => {
   globalThis.fetch = originalFetch;
   generationCounter = 0;
+  await Promise.all(
+    temporaryDirectories
+      .splice(0)
+      .map((directory) => rm(directory, { recursive: true, force: true })),
+  );
 });
 
 describe('complete benchmark cost', () => {
   test('includes candidate and judge generations in total cost', async () => {
     globalThis.fetch = mockFetch as typeof fetch;
+    const outputDir = await mkdtemp(join(tmpdir(), 'bench-igt-test-'));
+    temporaryDirectories.push(outputDir);
     const config: AppConfig = {
       ...loadConfig({
         datasetPath: 'tests/fixtures/cases.jsonl',
@@ -95,7 +106,7 @@ describe('complete benchmark cost', () => {
         judges: ['judge/one', 'judge/two'],
         repetitions: 1,
         concurrency: 1,
-        outputDir: 'results/test-cost',
+        outputDir,
         seed: 'test',
       }),
       apiKey: 'test-key',
@@ -103,9 +114,7 @@ describe('complete benchmark cost', () => {
     };
     const client = new OpenRouterClient(config);
     const execution = await runBenchmark(config, client);
-    const report = JSON.parse(
-      await Bun.file(`results/test-cost/${execution.run.runId}/report.json`).text(),
-    ) as {
+    const report = JSON.parse(await Bun.file(execution.reportPath).text()) as {
       grandTotalCost: { amountUsd: number };
       candidateSummaries: Array<{
         candidateCost: { amountUsd: number };

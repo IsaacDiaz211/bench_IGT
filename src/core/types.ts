@@ -40,6 +40,7 @@ export interface UsageSnapshot {
   totalTokens?: number;
   reasoningTokens?: number;
   cachedTokens?: number;
+  cacheWriteTokens?: number;
   costUsd?: number;
   costSource?: 'generation_metadata' | 'response_usage' | 'pricing_estimate';
   costEstimated?: boolean;
@@ -132,6 +133,38 @@ export interface CostSummary {
   callCount: number;
 }
 
+export interface LatencySummary {
+  mean: number;
+  median: number;
+  p95: number;
+}
+
+export interface ReliabilitySummary {
+  validRate: number;
+  transportSuccessRate: number;
+  failedCalls: number;
+  timeoutCalls: number;
+  httpErrors: Record<string, number>;
+}
+
+export interface TokenSummary {
+  promptTokens: number;
+  completionTokens: number;
+  totalTokens: number;
+  cachedTokens: number;
+  cacheWriteTokens: number;
+  calls: number;
+  callsWithUsage: number;
+}
+
+export interface JudgeScoreSummary {
+  mean: number;
+  count: number;
+  disagreementMean: number;
+  disagreementCount: number;
+  byJudge: Record<string, { mean: number; count: number }>;
+}
+
 export interface BenchmarkRun {
   schemaVersion: '1.0';
   runId: string;
@@ -156,9 +189,10 @@ export interface CandidateSummary {
   candidateCost: CostSummary;
   judgeCost: CostSummary;
   totalCost: CostSummary;
-  validRate: Record<Stage, number>;
-  latencyMs: Record<Stage, { mean: number; median: number; p95: number }>;
-  judgeScores: Record<Stage, { mean: number; count: number }>;
+  reliability: Record<Stage, ReliabilitySummary>;
+  latencyMs: Record<Stage, LatencySummary>;
+  tokenUsage: Record<Stage, TokenSummary>;
+  judgeScores: Record<Stage, JudgeScoreSummary>;
 }
 
 export interface BenchmarkReport {

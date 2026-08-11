@@ -14,6 +14,7 @@ import { judgeCandidateRun } from '../judges/run.ts';
 import type { OpenRouterClient } from '../openrouter/client.ts';
 import { buildReport, renderMarkdownReport } from '../reports/report.ts';
 import { runCandidateCase } from '../stages/candidate.ts';
+import { PROMPT_VERSION } from '../stages/prompts.ts';
 
 interface Job {
   benchmarkCase: BenchmarkCase;
@@ -197,7 +198,7 @@ export const runBenchmark = async (
     judgeModels: config.judges,
     repetitions: config.repetitions,
     seed: config.seed,
-    promptVersion: 'app-compatible-v1',
+    promptVersion: PROMPT_VERSION,
     candidateRuns,
     judgeRecords,
     calls,

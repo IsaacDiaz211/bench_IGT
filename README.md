@@ -106,19 +106,24 @@ pnpm validate-dataset -- --dataset tests/fixtures/cases.jsonl
 
 ## Estado
 
-El primer flujo ejecutable está implementado. Faltan incorporar el corpus chino,
-normalizar el corpus inglés existente y definir la lista final de modelos.
+El primer flujo ejecutable está implementado. Los corpus inglés y chino están
+disponibles como JSONL de evaluación; falta definir la lista final de modelos.
 
 ## Estructura prevista
 
 ```text
 bench_IGT/
 ├── datasets/
-│   ├── cases.jsonl
-│   └── references.jsonl
+│   ├── evaluation/
+│   │   ├── english.jsonl
+│   │   └── chinese.jsonl
+│   └── smoke/
+│       └── cases.jsonl
 ├── docs/
 │   └── benchmark-spec.md
 ├── prompts/
+│   ├── app-compatible/
+│   └── judges/
 ├── results/
 ├── src/
 │   ├── cli.ts
@@ -136,6 +141,9 @@ bench_IGT/
 ├── pnpm-lock.yaml
 └── README.md
 ```
+
+Las pruebas no escriben resultados en `results/`; usan directorios temporales.
+Esa carpeta queda reservada para ejecuciones reales del benchmark.
 
 ## Seguridad
 
