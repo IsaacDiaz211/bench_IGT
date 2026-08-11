@@ -36,6 +36,7 @@ La especificación completa está en
 - Tasa de errores, timeouts y reintentos.
 - Latencia total y por etapa.
 - Tokens utilizados y coste real de las generaciones.
+- Coste total por modelo candidato, incluyendo las llamadas de los jueces.
 - Acuerdo y divergencia entre los dos modelos jueces.
 
 La calidad no se reducirá inicialmente a una única cifra arbitraria. Los
@@ -60,10 +61,53 @@ cada ejecución. Si la aplicación cambia ese contrato, se creará una nueva
 versión del benchmark en lugar de comparar silenciosamente resultados
 incompatibles.
 
+## Stack y ejecución
+
+- Bun `1.3.12` como runtime.
+- pnpm `11.1.3` como gestor de paquetes.
+- TypeScript estricto.
+- `fetch` nativo para OpenRouter.
+- Ajv para validar JSON Schema.
+- `bun test` para pruebas.
+
+Instala las dependencias y configura la clave:
+
+```bash
+pnpm install
+cp .env.example .env
+```
+
+Ejecuta una comparación completa con candidatos y jueces:
+
+```bash
+pnpm benchmark -- \
+  --dataset datasets/evaluation/cases.jsonl \
+  --models modelo/candidato-a,modelo/candidato-b \
+  --judges modelo/juez-deepseek,modelo/juez-gpt
+```
+
+El comando ejecuta traducción, glosa y gramática. Cada salida válida se envía a
+los jueces configurados. El informe muestra por candidato:
+
+```text
+candidateCostUsd + judgeCostUsd = totalCostUsd
+```
+
+El coste total de la ejecución suma todos los candidatos y todos los jueces. Si
+OpenRouter no devuelve todavía las estadísticas de una generación, se usa el
+uso de tokens o el precio del catálogo como estimación y se marca como tal. Las
+llamadas sin coste resoluble se contabilizan aparte.
+
+Valida un dataset sin consumir API:
+
+```bash
+pnpm validate-dataset -- --dataset tests/fixtures/cases.jsonl
+```
+
 ## Estado
 
-La documentación y el formato metodológico están definidos. La implementación
-de la CLI, el dataset y los informes se incorporarán en pasos posteriores.
+El primer flujo ejecutable está implementado. Faltan incorporar el corpus chino,
+normalizar el corpus inglés existente y definir la lista final de modelos.
 
 ## Estructura prevista
 
@@ -77,7 +121,19 @@ bench_IGT/
 ├── prompts/
 ├── results/
 ├── src/
+│   ├── cli.ts
+│   ├── dataset/
+│   ├── execution/
+│   ├── judges/
+│   ├── metrics/
+│   ├── openrouter/
+│   ├── reports/
+│   ├── stages/
+│   └── validation/
+├── tests/
 ├── .env.example
+├── package.json
+├── pnpm-lock.yaml
 └── README.md
 ```
 

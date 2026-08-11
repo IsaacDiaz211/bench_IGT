@@ -1,0 +1,2 @@
+{"id":"en-test-001","sourceLang":"en","targetLang":"es","text":"Although it was raining, she went to the market.","sentences":["Although it was raining, she went to the market."],"isLogographic":false,"tags":["concession","past"],"difficulty":"intermediate","source":"test"}
+{"id":"zh-test-001","sourceLang":"zh","targetLang":"es","text":"虽然下雨了，她还是去了市场。","sentences":["虽然下雨了，她还是去了市场。"],"isLogographic":true,"tags":["concession","aspect"],"difficulty":"intermediate","source":"test"}

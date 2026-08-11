@@ -266,7 +266,19 @@ Siempre que estén disponibles se guardarán:
 
 El coste se tomará de los datos de uso de la respuesta y, cuando sea necesario,
 de los metadatos de generación de OpenRouter. El coste de los jueces se
-registrará en una categoría separada.
+registrará en una categoría separada y se atribuirá al modelo candidato cuya
+salida evalúa.
+
+Para cada candidato se calculará:
+
+```text
+candidateCostUsd + judgeCostUsd = totalCostUsd
+```
+
+El coste total del benchmark será la suma de los costes de candidatos y jueces.
+Una generación puede tener coste exacto, coste estimado a partir de tokens y
+precios, o coste desconocido. El informe mostrará las tres categorías y nunca
+convertirá un coste desconocido en cero silenciosamente.
 
 ## 6. Métricas
 
@@ -292,6 +304,8 @@ válidas estructuralmente pero incorrectas lingüísticamente.
 - Coste por caso.
 - Coste por 1.000 casos.
 - Coste de generación y coste de evaluación por separado.
+- Coste total por modelo candidato incluyendo la evaluación de sus jueces.
+- Coste total de la ejecución completa.
 
 ### 6.3. Calidad de traducción
 
@@ -344,6 +358,11 @@ en ella.
 El juez también recibirá el tipo de tarea y los criterios de la rúbrica. No se
 le pedirá que evalúe una respuesta libre: deberá producir otro JSON Schema
 estricto.
+
+Solo se envían a los jueces las salidas candidatas que pasan la validación del
+contrato. Una salida inválida cuenta para la tasa de fallos, pero no genera una
+llamada de evaluación que no podría representar una respuesta consumible por la
+app.
 
 ### 7.2. Resultado del juez
 
@@ -419,6 +438,9 @@ Cada ejecución tendrá un identificador y conservará, como mínimo:
 ```text
 results/<run-id>/
 ├── manifest.json
+├── run.json
+├── report.json
+├── report.md
 ├── requests.jsonl
 ├── responses.jsonl
 ├── validations.jsonl
