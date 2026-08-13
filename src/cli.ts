@@ -26,6 +26,7 @@ Opciones de run:
   --concurrency <n>      Ejecuciones de casos en paralelo.
   --output <path>        Directorio de resultados.
   --seed <value>         Semilla para aleatorizar el orden.
+  --resume <path>        Reanuda una ejecución existente desde su directorio.
   --skip-judges          Solo para depuración; no produce el coste total final.
 `);
 };
@@ -53,6 +54,7 @@ const cli = parseArgs({
     concurrency: { type: 'string' },
     output: { type: 'string', short: 'o' },
     seed: { type: 'string' },
+    resume: { type: 'string' },
     run: { type: 'string' },
     'skip-judges': { type: 'boolean' },
     help: { type: 'boolean', short: 'h' },
@@ -94,6 +96,7 @@ const run = async (): Promise<void> => {
     concurrency: parsePositiveInteger(cli.values.concurrency, '--concurrency'),
     outputDir: cli.values.output,
     seed: cli.values.seed,
+    resumeDir: cli.values.resume,
   });
 
   if (command === 'models') {

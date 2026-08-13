@@ -273,6 +273,14 @@ de los metadatos de generación de OpenRouter. El coste de los jueces se
 registrará en una categoría separada y se atribuirá al modelo candidato cuya
 salida evalúa.
 
+Los registros de llamada usan una representación normalizada:
+
+- `model`: modelo que recibió la petición.
+- `evaluatedModel`: modelo candidato al que se atribuye la llamada.
+- `actor`: `candidate` o `judge`.
+
+No se duplica el nombre del juez en un campo adicional.
+
 Para cada candidato se calculará:
 
 ```text
@@ -445,6 +453,9 @@ Cada ejecución tendrá un identificador y conservará, como mínimo:
 ```text
 results/<run-id>/
 ├── manifest.json
+├── progress.json
+├── completed.jsonl
+├── candidate-runs.jsonl
 ├── run.json
 ├── report.json
 ├── report.md
@@ -470,6 +481,11 @@ El manifiesto incluirá:
 Las respuestas originales se conservarán para poder auditar una puntuación o
 reproducir el informe. Nunca se almacenarán cabeceras `Authorization` ni
 claves API.
+
+Los artefactos se escriben incrementalmente. `completed.jsonl` funciona como
+checkpoint y `progress.json` permite observar el avance sin esperar al informe
+final. Si el proceso se interrumpe, una nueva ejecución puede usar `--resume`
+con el directorio del run.
 
 Las pruebas automatizadas usan directorios temporales y no escriben en
 `results/`. Esa carpeta queda reservada para ejecuciones reales.

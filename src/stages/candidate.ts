@@ -25,16 +25,18 @@ const runBatchCall = async (
   stage: 'translation' | 'gloss',
   benchmarkCase: BenchmarkCase,
   candidateModel: string,
+  repetition: number,
   sentences: string[],
   batchIndex: number,
 ): Promise<ParsedBatch> => {
   const call = await client.complete({
     actor: 'candidate',
     model: candidateModel,
-    candidateModel,
+    evaluatedModel: candidateModel,
     caseId: benchmarkCase.id,
     stage,
     batchIndex,
+    repetition,
     schemaName: schemaName(stage, 'candidate', benchmarkCase.isLogographic),
     schema: schemaFor(stage, 'candidate', benchmarkCase.isLogographic),
     systemPrompt: APP_SYSTEM_PROMPT,
@@ -103,11 +105,12 @@ const runBatchedStage = async (
   stage: 'translation' | 'gloss',
   benchmarkCase: BenchmarkCase,
   candidateModel: string,
+  repetition: number,
 ): Promise<{ result: StageResult; calls: CallResult[] }> => {
   const batches = chunk(benchmarkCase.sentences, BATCH_SIZE);
   const parsedBatches = await Promise.all(
     batches.map((sentences, index) =>
-      runBatchCall(client, stage, benchmarkCase, candidateModel, sentences, index),
+      runBatchCall(client, stage, benchmarkCase, candidateModel, repetition, sentences, index),
     ),
   );
   const calls = parsedBatches.map((batch) => batch.call);
@@ -135,13 +138,15 @@ const runGrammarStage = async (
   client: OpenRouterClient,
   benchmarkCase: BenchmarkCase,
   candidateModel: string,
+  repetition: number,
 ): Promise<{ result: StageResult; calls: CallResult[] }> => {
   const call = await client.complete({
     actor: 'candidate',
     model: candidateModel,
-    candidateModel,
+    evaluatedModel: candidateModel,
     caseId: benchmarkCase.id,
     stage: 'grammar',
+    repetition,
     schemaName: schemaName('grammar', 'candidate', benchmarkCase.isLogographic),
     schema: schemaFor('grammar', 'candidate', benchmarkCase.isLogographic),
     systemPrompt: APP_SYSTEM_PROMPT,
@@ -200,9 +205,9 @@ export const runCandidateCase = async (
   const startedAt = new Date().toISOString();
   const startedAtMs = performance.now();
   const [translation, gloss, grammar] = await Promise.all([
-    runBatchedStage(client, 'translation', benchmarkCase, candidateModel),
-    runBatchedStage(client, 'gloss', benchmarkCase, candidateModel),
-    runGrammarStage(client, benchmarkCase, candidateModel),
+    runBatchedStage(client, 'translation', benchmarkCase, candidateModel, repetition),
+    runBatchedStage(client, 'gloss', benchmarkCase, candidateModel, repetition),
+    runGrammarStage(client, benchmarkCase, candidateModel, repetition),
   ]);
   const endedAt = new Date().toISOString();
 

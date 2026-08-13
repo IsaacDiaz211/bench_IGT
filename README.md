@@ -86,6 +86,17 @@ pnpm benchmark -- \
   --judges modelo/juez-deepseek,modelo/juez-gpt
 ```
 
+Los resultados se escriben de forma incremental desde el primer caso en
+`results/<run-id>/`. Para continuar una ejecución interrumpida:
+
+```bash
+pnpm benchmark -- --resume results/<run-id>
+```
+
+El progreso queda en `progress.json` y los jobs terminados en
+`completed.jsonl`. No es necesario esperar al final para conservar las
+respuestas ya completadas.
+
 El comando ejecuta traducción, glosa y gramática. Cada salida válida se envía a
 los jueces configurados. El informe muestra por candidato:
 

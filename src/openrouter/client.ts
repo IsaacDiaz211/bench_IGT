@@ -22,11 +22,11 @@ interface OpenRouterClientConfig {
 interface CompleteInput {
   actor: CallActor;
   model: string;
-  candidateModel: string;
-  judgeModel?: string;
+  evaluatedModel: string;
   caseId: string;
   stage: Stage;
   batchIndex?: number;
+  repetition: number;
   schemaName: string;
   schema: JsonSchema;
   systemPrompt: string;
@@ -283,11 +283,11 @@ export class OpenRouterClient {
       callId,
       actor: input.actor,
       model: input.model,
-      candidateModel: input.candidateModel,
-      judgeModel: input.judgeModel,
+      evaluatedModel: input.evaluatedModel,
       caseId: input.caseId,
       stage: input.stage,
       batchIndex: input.batchIndex,
+      repetition: input.repetition,
       startedAt,
       endedAt,
       latencyMs: performance.now() - startedAtMs - statsLookupMs,

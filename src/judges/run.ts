@@ -16,10 +16,10 @@ const judgeStage = async (
   const call = await client.complete({
     actor: 'judge',
     model: judgeModel,
-    candidateModel: candidateRun.candidateModel,
-    judgeModel,
+    evaluatedModel: candidateRun.candidateModel,
     caseId: benchmarkCase.id,
     stage,
+    repetition: candidateRun.repetition,
     schemaName: schemaName(stage, 'judge', benchmarkCase.isLogographic),
     schema: schemaFor(stage, 'judge', benchmarkCase.isLogographic),
     systemPrompt: JUDGE_SYSTEM_PROMPT,
@@ -30,10 +30,6 @@ const judgeStage = async (
     return {
       judgeCall: call,
       candidateRunId: candidateRun.runId,
-      candidateModel: candidateRun.candidateModel,
-      caseId: benchmarkCase.id,
-      repetition: candidateRun.repetition,
-      stage,
       valid: false,
       validation: { valid: false, errors: [call.error ?? 'La petición del juez falló.'] },
     };
@@ -48,10 +44,6 @@ const judgeStage = async (
     return {
       judgeCall: call,
       candidateRunId: candidateRun.runId,
-      candidateModel: candidateRun.candidateModel,
-      caseId: benchmarkCase.id,
-      repetition: candidateRun.repetition,
-      stage,
       valid: validation.valid,
       result,
       validation,
@@ -61,10 +53,6 @@ const judgeStage = async (
     return {
       judgeCall: call,
       candidateRunId: candidateRun.runId,
-      candidateModel: candidateRun.candidateModel,
-      caseId: benchmarkCase.id,
-      repetition: candidateRun.repetition,
-      stage,
       valid: false,
       validation: { valid: false, errors: [message] },
     };
@@ -76,6 +64,7 @@ export const judgeCandidateRun = async (
   benchmarkCase: BenchmarkCase,
   candidateRun: CandidateRun,
   judgeModels: readonly string[],
+  onRecord?: (record: JudgeRecord) => Promise<void>,
 ): Promise<JudgeRecord[]> => {
   const records: JudgeRecord[] = [];
 
@@ -85,7 +74,9 @@ export const judgeCandidateRun = async (
     }
 
     for (const judgeModel of judgeModels) {
-      records.push(await judgeStage(client, benchmarkCase, candidateRun, stage, judgeModel));
+      const record = await judgeStage(client, benchmarkCase, candidateRun, stage, judgeModel);
+      records.push(record);
+      await onRecord?.(record);
     }
   }
 

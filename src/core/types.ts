@@ -61,11 +61,11 @@ export interface CallResult {
   callId: string;
   actor: CallActor;
   model: string;
-  candidateModel: string;
-  judgeModel?: string;
+  evaluatedModel: string;
   caseId: string;
   stage: Stage;
   batchIndex?: number;
+  repetition: number;
   startedAt: string;
   endedAt: string;
   latencyMs: number;
@@ -109,10 +109,6 @@ export interface CandidateRun {
 export interface JudgeRecord {
   judgeCall: CallResult;
   candidateRunId: string;
-  candidateModel: string;
-  caseId: string;
-  repetition: number;
-  stage: Stage;
   valid: boolean;
   result?: JsonValue;
   validation: ValidationResult;

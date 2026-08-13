@@ -15,13 +15,13 @@ const stages: Stage[] = ['translation', 'gloss', 'grammar'];
 
 const callsForCandidate = (run: BenchmarkRun, candidateModel: string): CallResult[] => {
   return run.calls.filter(
-    (call) => call.candidateModel === candidateModel && call.actor === 'candidate',
+    (call) => call.evaluatedModel === candidateModel && call.actor === 'candidate',
   );
 };
 
 const callsForJudges = (run: BenchmarkRun, candidateModel: string): CallResult[] => {
   return run.calls.filter(
-    (call) => call.candidateModel === candidateModel && call.actor === 'judge',
+    (call) => call.evaluatedModel === candidateModel && call.actor === 'judge',
   );
 };
 
@@ -32,7 +32,7 @@ const buildCandidateSummary = (run: BenchmarkRun, candidateModel: string): Candi
   const candidateCalls = callsForCandidate(run, candidateModel);
   const judgeCalls = callsForJudges(run, candidateModel);
   const candidateJudgeRecords = run.judgeRecords.filter(
-    (record) => record.candidateModel === candidateModel,
+    (record) => record.judgeCall.evaluatedModel === candidateModel,
   );
   const reliability = Object.fromEntries(
     stages.map((stage) => [stage, summarizeStageReliability(candidateRuns, candidateCalls, stage)]),

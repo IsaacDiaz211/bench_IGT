@@ -12,7 +12,7 @@ export const summarizeJudgeScores = (
   records: readonly JudgeRecord[],
   stage: Stage,
 ): JudgeScoreSummary => {
-  const validRecords = records.filter((record) => record.stage === stage && record.valid);
+  const validRecords = records.filter((record) => record.judgeCall.stage === stage && record.valid);
   const scores = validRecords
     .map(readOverallScore)
     .filter((score): score is number => score !== undefined);
@@ -24,7 +24,7 @@ export const summarizeJudgeScores = (
     if (score === undefined) {
       continue;
     }
-    const judge = record.judgeCall.judgeModel ?? record.judgeCall.model;
+    const judge = record.judgeCall.model;
     scoresByJudge.set(judge, [...(scoresByJudge.get(judge) ?? []), score]);
     scoresByCandidateRun.set(record.candidateRunId, [
       ...(scoresByCandidateRun.get(record.candidateRunId) ?? []),

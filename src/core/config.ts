@@ -13,6 +13,7 @@ export interface AppConfig {
   concurrency: number;
   outputDir: string;
   seed: string;
+  resumeDir?: string;
 }
 
 export interface ConfigOverrides {
@@ -23,6 +24,7 @@ export interface ConfigOverrides {
   concurrency?: number;
   outputDir?: string;
   seed?: string;
+  resumeDir?: string;
 }
 
 const readString = (name: string, fallback = ''): string => {
@@ -65,6 +67,7 @@ export const loadConfig = (overrides: ConfigOverrides = {}): AppConfig => {
     concurrency: overrides.concurrency ?? readPositiveInteger('BENCHMARK_CONCURRENCY', 1),
     outputDir: overrides.outputDir ?? readString('BENCHMARK_OUTPUT_DIR', 'results'),
     seed: overrides.seed ?? readString('BENCHMARK_SEED', 'bench-igt-v1'),
+    resumeDir: overrides.resumeDir,
   };
 };
 
