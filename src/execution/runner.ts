@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import type { AppConfig } from '../core/config.ts';
 import type { BenchmarkCase, BenchmarkRun } from '../core/types.ts';
-import { shuffle } from '../core/utils.ts';
+import { runWithConcurrency, shuffle } from '../core/utils.ts';
 import { loadDataset } from '../dataset/loader.ts';
 import { judgeCandidateRun } from '../judges/run.ts';
 import type { OpenRouterClient } from '../openrouter/client.ts';
@@ -15,25 +15,6 @@ interface Job {
   candidateModel: string;
   repetition: number;
 }
-
-const runWithConcurrency = async <T>(
-  items: readonly T[],
-  concurrency: number,
-  worker: (item: T) => Promise<void>,
-): Promise<void> => {
-  let cursor = 0;
-  const workers = Array.from({ length: Math.min(concurrency, items.length) }, async () => {
-    while (cursor < items.length) {
-      const index = cursor;
-      cursor += 1;
-      const item = items[index];
-      if (item !== undefined) {
-        await worker(item);
-      }
-    }
-  });
-  await Promise.all(workers);
-};
 
 const createRunId = (): string => {
   return `${new Date()

@@ -149,6 +149,28 @@ export const renderMarkdownReport = (run: BenchmarkRun, report: BenchmarkReport)
 
   lines.push(
     '',
+    '## Calidad por juez',
+    '',
+    '| Juez | Modelo candidato | Etapa | Media | Evaluaciones |',
+    '| --- | --- | --- | ---: | ---: |',
+  );
+  for (const summary of report.candidateSummaries) {
+    for (const stage of stages) {
+      const judges = Object.keys(summary.judgeScores[stage].byJudge).sort();
+      for (const judge of judges) {
+        const entry = summary.judgeScores[stage].byJudge[judge];
+        if (!entry) {
+          continue;
+        }
+        lines.push(
+          `| ${judge} | ${summary.candidateModel} | ${stage} | ${entry.mean.toFixed(2)} | ${entry.count} |`,
+        );
+      }
+    }
+  }
+
+  lines.push(
+    '',
     '## Latencia por etapa',
     '',
     '| Modelo | Etapa | Media | Mediana | P95 |',

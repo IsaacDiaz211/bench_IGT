@@ -63,6 +63,25 @@ export const chunk = <T>(items: readonly T[], size: number): T[][] => {
   return result;
 };
 
+export const runWithConcurrency = async <T>(
+  items: readonly T[],
+  concurrency: number,
+  worker: (item: T) => Promise<void>,
+): Promise<void> => {
+  let cursor = 0;
+  const workers = Array.from({ length: Math.min(concurrency, items.length) }, async () => {
+    while (cursor < items.length) {
+      const index = cursor;
+      cursor += 1;
+      const item = items[index];
+      if (item !== undefined) {
+        await worker(item);
+      }
+    }
+  });
+  await Promise.all(workers);
+};
+
 export const sum = (values: readonly number[]): number => {
   return values.reduce((total, value) => total + value, 0);
 };

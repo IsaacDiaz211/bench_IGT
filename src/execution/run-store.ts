@@ -176,6 +176,17 @@ export class RunStore {
     });
   }
 
+  public async addJudgeModels(models: readonly string[]): Promise<void> {
+    await this.enqueue(async () => {
+      for (const model of models) {
+        if (!this.manifest.judgeModels.includes(model)) {
+          this.manifest.judgeModels.push(model);
+        }
+      }
+      await this.writeManifestUnsafe();
+    });
+  }
+
   public async recordCandidateRun(candidateRun: CandidateRun): Promise<void> {
     await this.enqueue(async () => {
       await this.appendLineUnsafe('candidate-runs.jsonl', candidateRun);

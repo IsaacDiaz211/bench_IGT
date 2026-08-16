@@ -1,7 +1,9 @@
+import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { loadConfig, parseModelList } from './core/config.ts';
 import { loadDataset } from './dataset/loader.ts';
 import { runBenchmark, writeReportForRun } from './execution/runner.ts';
+import { addJudgesToRun } from './judges/backfill.ts';
 import { OpenRouterClient } from './openrouter/client.ts';
 
 const printHelp = (): void => {
@@ -12,6 +14,8 @@ Comandos:
   models             Lista modelos y precios disponibles en OpenRouter.
   validate-dataset   Valida un dataset JSONL sin hacer peticiones de red.
   report             Regenera el informe de una ejecución existente.
+  add-judge          Evalúa una ejecución completada con modelos juez adicionales
+                     y escribe el informe en un directorio derivado.
 
 Ejemplo:
   pnpm benchmark -- --dataset datasets/evaluation/cases.jsonl \\
@@ -28,6 +32,12 @@ Opciones de run:
   --seed <value>         Semilla para aleatorizar el orden.
   --resume <path>        Reanuda una ejecución existente desde su directorio.
   --skip-judges          Solo para depuración; no produce el coste total final.
+
+Opciones de add-judge:
+  --run <path>           Directorio (o run.json) de la ejecución completada.
+  --judges <a,b>         Modelos juez adicionales.
+  --output <path>        Directorio derivado (por defecto, el original más "-addjudge-<modelos>").
+  --concurrency <n>      Evaluaciones en paralelo.
 `);
 };
 
@@ -61,7 +71,12 @@ const cli = parseArgs({
   },
 });
 
-const command = cli.positionals[0] ?? 'help';
+const command = cli.positionals[0] ?? 'run';
+
+const extraPositionals = cli.positionals.slice(1);
+if (extraPositionals.length) {
+  throw new Error(`Argumento desconocido: ${extraPositionals.join(' ')}.`);
+}
 
 const run = async (): Promise<void> => {
   if (cli.values.help || command === 'help') {
@@ -84,6 +99,35 @@ const run = async (): Promise<void> => {
     }
     const reportMarkdown = await writeReportForRun(runPath);
     console.log(reportMarkdown);
+    return;
+  }
+
+  if (command === 'add-judge') {
+    const runPath = cli.values.run;
+    const judgeModels = cli.values.judges ? parseModelList(cli.values.judges) : undefined;
+    if (!runPath) {
+      throw new Error('add-judge requiere --run <directorio-o-run.json>.');
+    }
+    if (!judgeModels?.length) {
+      throw new Error('add-judge requiere --judges <modelos adicionales>.');
+    }
+    const config = loadConfig();
+    const client = new OpenRouterClient(config);
+    const directory = runPath.endsWith('.json') ? join(runPath, '..') : runPath;
+    const concurrency =
+      parsePositiveInteger(cli.values.concurrency, '--concurrency') ?? config.concurrency;
+    const result = await addJudgesToRun(
+      directory,
+      { judgeModels, outputDir: cli.values.output, concurrency },
+      client,
+    );
+    console.log(`Jueces añadidos: ${result.addedJudges.join(', ')}`);
+    if (result.skippedJudges.length) {
+      console.log(`Jueces ya presentes, omitidos: ${result.skippedJudges.join(', ')}`);
+    }
+    console.log(`Evaluaciones nuevas: ${result.judgeCallCount}`);
+    console.log(`Informe: ${result.reportPath}`);
+    console.log(result.reportMarkdown);
     return;
   }
 

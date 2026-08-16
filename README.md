@@ -97,6 +97,19 @@ El progreso queda en `progress.json` y los jobs terminados en
 `completed.jsonl`. No es necesario esperar al final para conservar las
 respuestas ya completadas.
 
+Sin argumentos, `pnpm benchmark` ejecuta `run` con la configuración de
+`.env`. Para evaluar una ejecución ya completada con modelos juez
+adicionales, sin volver a llamar a los candidatos:
+
+```bash
+pnpm benchmark -- add-judge --run results/<run-id> --judges modelo/juez-extra
+```
+
+El resultado se escribe en un directorio derivado
+(`results/<run-id>-addjudge-<modelos>`, o el indicado con `--output`) y el
+run original queda intacto. Los jueces ya presentes en la ejecución se
+omiten.
+
 El comando ejecuta traducción, glosa y gramática. Cada salida válida se envía a
 los jueces configurados. El informe muestra por candidato:
 
