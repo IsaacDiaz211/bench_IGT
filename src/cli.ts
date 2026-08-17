@@ -1,5 +1,6 @@
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
+import { addCandidatesToRun } from './candidates/backfill.ts';
 import { loadConfig, parseModelList } from './core/config.ts';
 import { loadDataset } from './dataset/loader.ts';
 import { runBenchmark, writeReportForRun } from './execution/runner.ts';
@@ -16,6 +17,8 @@ Comandos:
   report             Regenera el informe de una ejecución existente.
   add-judge          Evalúa una ejecución completada con modelos juez adicionales
                      y escribe el informe en un directorio derivado.
+  add-candidate      Añade modelos candidato a una ejecución completada; solo se
+                     ejecutan los nuevos y los jueces existentes evalúan sus salidas.
 
 Ejemplo:
   pnpm benchmark -- --dataset datasets/evaluation/cases.jsonl \\
@@ -38,6 +41,12 @@ Opciones de add-judge:
   --judges <a,b>         Modelos juez adicionales.
   --output <path>        Directorio derivado (por defecto, el original más "-addjudge-<modelos>").
   --concurrency <n>      Evaluaciones en paralelo.
+
+Opciones de add-candidate:
+  --run <path>           Directorio (o run.json) de la ejecución completada.
+  --models <a,b>         Modelos candidato adicionales.
+  --output <path>        Directorio derivado (por defecto, el original más "-addcandidate-<modelos>").
+  --concurrency <n>      Ejecuciones de casos en paralelo.
 `);
 };
 
@@ -125,6 +134,36 @@ const run = async (): Promise<void> => {
     if (result.skippedJudges.length) {
       console.log(`Jueces ya presentes, omitidos: ${result.skippedJudges.join(', ')}`);
     }
+    console.log(`Evaluaciones nuevas: ${result.judgeCallCount}`);
+    console.log(`Informe: ${result.reportPath}`);
+    console.log(result.reportMarkdown);
+    return;
+  }
+
+  if (command === 'add-candidate') {
+    const runPath = cli.values.run;
+    const candidateModels = cli.values.models ? parseModelList(cli.values.models) : undefined;
+    if (!runPath) {
+      throw new Error('add-candidate requiere --run <directorio-o-run.json>.');
+    }
+    if (!candidateModels?.length) {
+      throw new Error('add-candidate requiere --models <modelos adicionales>.');
+    }
+    const config = loadConfig();
+    const client = new OpenRouterClient(config);
+    const directory = runPath.endsWith('.json') ? join(runPath, '..') : runPath;
+    const concurrency =
+      parsePositiveInteger(cli.values.concurrency, '--concurrency') ?? config.concurrency;
+    const result = await addCandidatesToRun(
+      directory,
+      { candidateModels, outputDir: cli.values.output, concurrency },
+      client,
+    );
+    console.log(`Candidatos añadidos: ${result.addedCandidates.join(', ')}`);
+    if (result.skippedCandidates.length) {
+      console.log(`Candidatos ya presentes, omitidos: ${result.skippedCandidates.join(', ')}`);
+    }
+    console.log(`Ejecuciones de candidato nuevas: ${result.candidateRunCount}`);
     console.log(`Evaluaciones nuevas: ${result.judgeCallCount}`);
     console.log(`Informe: ${result.reportPath}`);
     console.log(result.reportMarkdown);

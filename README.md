@@ -110,6 +110,20 @@ El resultado se escribe en un directorio derivado
 run original queda intacto. Los jueces ya presentes en la ejecución se
 omiten.
 
+De forma simétrica, para añadir un modelo candidato nuevo a una ejecución ya
+completada, sin volver a llamar a los candidatos existentes:
+
+```bash
+pnpm benchmark -- add-candidate --run results/<run-id> --models modelo/candidato-extra
+```
+
+Solo se ejecutan los jobs del candidato nuevo (casos × repeticiones del run) y
+los jueces ya presentes en la ejecución evalúan únicamente sus salidas, de modo
+que las puntuaciones siguen siendo comparables. El resultado se escribe en un
+directorio derivado (`results/<run-id>-addcandidate-<modelos>`, o el indicado
+con `--output`) y el run original queda intacto. Los modelos ya presentes en
+la ejecución se omiten.
+
 El comando ejecuta traducción, glosa y gramática. Cada salida válida se envía a
 los jueces configurados. El informe muestra por candidato:
 

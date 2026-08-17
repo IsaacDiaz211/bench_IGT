@@ -2,6 +2,7 @@ import { afterEach, describe, expect, test } from 'bun:test';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { addCandidatesToRun } from '../src/candidates/backfill.ts';
 import type { AppConfig } from '../src/core/config.ts';
 import { loadConfig } from '../src/core/config.ts';
 import { runBenchmark } from '../src/execution/runner.ts';
@@ -20,6 +21,10 @@ const mockFetch = async (input: string | URL | Request, init?: RequestInit): Pro
       data: [
         {
           id: 'candidate/model',
+          pricing: { prompt: '0.000001', completion: '0.000002', request: '0' },
+        },
+        {
+          id: 'candidate/two',
           pricing: { prompt: '0.000001', completion: '0.000002', request: '0' },
         },
         { id: 'judge/one', pricing: { prompt: '0.000003', completion: '0.000004', request: '0' } },
@@ -225,5 +230,117 @@ describe('addJudgesToRun', () => {
       judgeModels: string[];
     };
     expect(manifest.judgeModels).toContain('judge/three');
+  });
+});
+
+describe('addCandidatesToRun', () => {
+  test('añade un segundo candidato en un directorio derivado sin tocar el original', async () => {
+    globalThis.fetch = mockFetch as typeof fetch;
+    const outputDir = await mkdtemp(join(tmpdir(), 'bench-igt-test-'));
+    temporaryDirectories.push(outputDir);
+    const config = testConfig(outputDir);
+    const client = new OpenRouterClient(config);
+    const execution = await runBenchmark(config, client);
+    const sourceDirectory = join(execution.reportPath, '..');
+
+    const originalCandidateRuns = await countLines(join(sourceDirectory, 'candidate-runs.jsonl'));
+    const originalJudgements = await countLines(join(sourceDirectory, 'judgements.jsonl'));
+
+    const derivedOutput = join(outputDir, 'derived');
+    const result = await addCandidatesToRun(
+      sourceDirectory,
+      { candidateModels: ['candidate/two'], outputDir: derivedOutput },
+      client,
+    );
+
+    expect(result.addedCandidates).toEqual(['candidate/two']);
+    expect(result.skippedCandidates).toEqual([]);
+    expect(result.candidateRunCount).toBe(2);
+    expect(result.judgeCallCount).toBe(12);
+
+    const derivedManifest = JSON.parse(
+      await Bun.file(join(derivedOutput, 'manifest.json')).text(),
+    ) as { candidateModels: string[]; totalJobs: number; status: string };
+    expect(derivedManifest.candidateModels).toEqual(['candidate/model', 'candidate/two']);
+    expect(derivedManifest.totalJobs).toBe(4);
+    expect(derivedManifest.status).toBe('completed');
+
+    const derivedRun = JSON.parse(await Bun.file(join(derivedOutput, 'run.json')).text()) as {
+      candidateModels: string[];
+      candidateRuns: Array<{ candidateModel: string }>;
+      judgeRecords: Array<{ judgeCall: { model: string; evaluatedModel: string } }>;
+    };
+    expect(derivedRun.candidateModels).toEqual(['candidate/model', 'candidate/two']);
+    expect(derivedRun.candidateRuns).toHaveLength(originalCandidateRuns + 2);
+
+    const twoRecords = derivedRun.judgeRecords.filter(
+      (record) => record.judgeCall.evaluatedModel === 'candidate/two',
+    );
+    expect(twoRecords).toHaveLength(12);
+    expect(
+      derivedRun.judgeRecords.filter(
+        (record) => record.judgeCall.evaluatedModel === 'candidate/model',
+      ),
+    ).toHaveLength(originalJudgements);
+    const judgeModelsUsed = new Set(twoRecords.map((record) => record.judgeCall.model));
+    expect(judgeModelsUsed).toEqual(new Set(['judge/one', 'judge/two']));
+
+    const reportMarkdown = await Bun.file(join(derivedOutput, 'report.md')).text();
+    expect(reportMarkdown).toContain('| candidate/two |');
+
+    const originalManifest = JSON.parse(
+      await Bun.file(join(sourceDirectory, 'manifest.json')).text(),
+    ) as { candidateModels: string[]; totalJobs: number };
+    expect(originalManifest.candidateModels).toEqual(['candidate/model']);
+    expect(originalManifest.totalJobs).toBe(2);
+    expect(await countLines(join(sourceDirectory, 'candidate-runs.jsonl'))).toBe(
+      originalCandidateRuns,
+    );
+    expect(await countLines(join(sourceDirectory, 'judgements.jsonl'))).toBe(originalJudgements);
+  });
+
+  test('omite candidatos ya presentes y falla si todos se repiten', async () => {
+    globalThis.fetch = mockFetch as typeof fetch;
+    const outputDir = await mkdtemp(join(tmpdir(), 'bench-igt-test-'));
+    temporaryDirectories.push(outputDir);
+    const config = testConfig(outputDir);
+    const client = new OpenRouterClient(config);
+    const execution = await runBenchmark(config, client);
+    const sourceDirectory = join(execution.reportPath, '..');
+
+    await expect(
+      addCandidatesToRun(sourceDirectory, { candidateModels: ['candidate/model'] }, client),
+    ).rejects.toThrow('ya participaron');
+
+    const mixedOutput = join(outputDir, 'mixed');
+    const mixed = await addCandidatesToRun(
+      sourceDirectory,
+      { candidateModels: ['candidate/model', 'candidate/two'], outputDir: mixedOutput },
+      client,
+    );
+    expect(mixed.addedCandidates).toEqual(['candidate/two']);
+    expect(mixed.skippedCandidates).toEqual(['candidate/model']);
+  });
+
+  test('usa el nombre derivado por defecto cuando no se pasa --output', async () => {
+    globalThis.fetch = mockFetch as typeof fetch;
+    const outputDir = await mkdtemp(join(tmpdir(), 'bench-igt-test-'));
+    temporaryDirectories.push(outputDir);
+    const config = testConfig(outputDir);
+    const client = new OpenRouterClient(config);
+    const execution = await runBenchmark(config, client);
+    const sourceDirectory = join(execution.reportPath, '..');
+
+    const result = await addCandidatesToRun(
+      sourceDirectory,
+      { candidateModels: ['candidate/two'] },
+      client,
+    );
+
+    expect(result.directory).toBe(`${sourceDirectory}-addcandidate-candidate-two`);
+    const manifest = JSON.parse(await Bun.file(join(result.directory, 'manifest.json')).text()) as {
+      candidateModels: string[];
+    };
+    expect(manifest.candidateModels).toContain('candidate/two');
   });
 });

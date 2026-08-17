@@ -187,6 +187,18 @@ export class RunStore {
     });
   }
 
+  public async addCandidateModels(models: readonly string[], addedJobs: number): Promise<void> {
+    await this.enqueue(async () => {
+      for (const model of models) {
+        if (!this.manifest.candidateModels.includes(model)) {
+          this.manifest.candidateModels.push(model);
+        }
+      }
+      this.manifest.totalJobs += addedJobs;
+      await this.writeManifestUnsafe();
+    });
+  }
+
   public async recordCandidateRun(candidateRun: CandidateRun): Promise<void> {
     await this.enqueue(async () => {
       await this.appendLineUnsafe('candidate-runs.jsonl', candidateRun);
