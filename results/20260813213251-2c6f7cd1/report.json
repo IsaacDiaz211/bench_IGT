@@ -1,0 +1,452 @@
+{
+  "runId": "20260813213251-2c6f7cd1",
+  "generatedAt": "2026-08-13T22:12:24.475Z",
+  "grandTotalCost": {
+    "amountUsd": 0.22121735799999998,
+    "exactAmountUsd": 0.22121735799999998,
+    "estimatedAmountUsd": 0,
+    "unknownCalls": 13,
+    "callCount": 216
+  },
+  "judgeTotalCost": {
+    "amountUsd": 0.10691333299999999,
+    "exactAmountUsd": 0.10691333299999999,
+    "estimatedAmountUsd": 0,
+    "unknownCalls": 13,
+    "callCount": 144
+  },
+  "candidateSummaries": [
+    {
+      "candidateModel": "inception/mercury-2",
+      "runCount": 8,
+      "candidateCost": {
+        "amountUsd": 0.025899524999999996,
+        "exactAmountUsd": 0.025899524999999996,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 0,
+        "callCount": 24
+      },
+      "judgeCost": {
+        "amountUsd": 0.03914610200000001,
+        "exactAmountUsd": 0.03914610200000001,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 1,
+        "callCount": 48
+      },
+      "totalCost": {
+        "amountUsd": 0.06504562700000001,
+        "exactAmountUsd": 0.06504562700000001,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 1,
+        "callCount": 72
+      },
+      "reliability": {
+        "translation": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "gloss": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "grammar": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        }
+      },
+      "latencyMs": {
+        "translation": {
+          "mean": 1583.1193352500486,
+          "median": 1530.2751565000508,
+          "p95": 2245.6142150000087
+        },
+        "gloss": {
+          "mean": 5802.605180999963,
+          "median": 5452.215849500033,
+          "p95": 9927.253583999816
+        },
+        "grammar": {
+          "mean": 2489.694232999973,
+          "median": 2860.404061999987,
+          "p95": 3680.38286100002
+        }
+      },
+      "tokenUsage": {
+        "translation": {
+          "promptTokens": 4072,
+          "completionTokens": 3612,
+          "totalTokens": 7684,
+          "cachedTokens": 1196,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "gloss": {
+          "promptTokens": 7902,
+          "completionTokens": 21657,
+          "totalTokens": 29559,
+          "cachedTokens": 1939,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "grammar": {
+          "promptTokens": 5093,
+          "completionTokens": 4991,
+          "totalTokens": 10084,
+          "cachedTokens": 1586,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        }
+      },
+      "judgeScores": {
+        "translation": {
+          "mean": 4.5,
+          "count": 16,
+          "disagreementMean": 0.375,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.6875,
+              "count": 8
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.3125,
+              "count": 8
+            }
+          }
+        },
+        "gloss": {
+          "mean": 2.5933333333333333,
+          "count": 15,
+          "disagreementMean": 0.29999999999999993,
+          "disagreementCount": 7,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 2.4857142857142853,
+              "count": 7
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 2.6875,
+              "count": 8
+            }
+          }
+        },
+        "grammar": {
+          "mean": 4.11875,
+          "count": 16,
+          "disagreementMean": 0.48749999999999993,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.237500000000001,
+              "count": 8
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4,
+              "count": 8
+            }
+          }
+        }
+      }
+    },
+    {
+      "candidateModel": "openai/gpt-5.6-luna:nitro",
+      "runCount": 8,
+      "candidateCost": {
+        "amountUsd": 0.007953499999999999,
+        "exactAmountUsd": 0.007953499999999999,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 0,
+        "callCount": 24
+      },
+      "judgeCost": {
+        "amountUsd": 0.033258140000000005,
+        "exactAmountUsd": 0.033258140000000005,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 7,
+        "callCount": 48
+      },
+      "totalCost": {
+        "amountUsd": 0.04121164000000001,
+        "exactAmountUsd": 0.04121164000000001,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 7,
+        "callCount": 72
+      },
+      "reliability": {
+        "translation": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "gloss": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "grammar": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        }
+      },
+      "latencyMs": {
+        "translation": {
+          "mean": 2462.930661875036,
+          "median": 2260.261086000013,
+          "p95": 3579.640213999999
+        },
+        "gloss": {
+          "mean": 8594.48350699999,
+          "median": 8581.390681499986,
+          "p95": 14950.529548000079
+        },
+        "grammar": {
+          "mean": 3978.1434589999817,
+          "median": 3781.8939404998964,
+          "p95": 5188.315299
+        }
+      },
+      "tokenUsage": {
+        "translation": {
+          "promptTokens": 1756,
+          "completionTokens": 1204,
+          "totalTokens": 2960,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "gloss": {
+          "promptTokens": 4532,
+          "completionTokens": 8655,
+          "totalTokens": 13187,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "grammar": {
+          "promptTokens": 1805,
+          "completionTokens": 2048,
+          "totalTokens": 3853,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        }
+      },
+      "judgeScores": {
+        "translation": {
+          "mean": 4.75,
+          "count": 14,
+          "disagreementMean": 0.4166666666666667,
+          "disagreementCount": 6,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.75,
+              "count": 6
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.75,
+              "count": 8
+            }
+          }
+        },
+        "gloss": {
+          "mean": 2.983333333333333,
+          "count": 12,
+          "disagreementMean": 0.44999999999999996,
+          "disagreementCount": 4,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 3.2,
+              "count": 4
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 2.875,
+              "count": 8
+            }
+          }
+        },
+        "grammar": {
+          "mean": 4.4,
+          "count": 15,
+          "disagreementMean": 0.5714285714285714,
+          "disagreementCount": 7,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.714285714285714,
+              "count": 7
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.125,
+              "count": 8
+            }
+          }
+        }
+      }
+    },
+    {
+      "candidateModel": "google/gemini-3.7-flash:nitro",
+      "runCount": 8,
+      "candidateCost": {
+        "amountUsd": 0.08045100000000001,
+        "exactAmountUsd": 0.08045100000000001,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 0,
+        "callCount": 24
+      },
+      "judgeCost": {
+        "amountUsd": 0.03450909099999999,
+        "exactAmountUsd": 0.03450909099999999,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 5,
+        "callCount": 48
+      },
+      "totalCost": {
+        "amountUsd": 0.114960091,
+        "exactAmountUsd": 0.114960091,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 5,
+        "callCount": 72
+      },
+      "reliability": {
+        "translation": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "gloss": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "grammar": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        }
+      },
+      "latencyMs": {
+        "translation": {
+          "mean": 2598.668214749996,
+          "median": 2543.9273934998782,
+          "p95": 3373.5203029999975
+        },
+        "gloss": {
+          "mean": 3856.70768437504,
+          "median": 3603.7572550001787,
+          "p95": 5320.819688000018
+        },
+        "grammar": {
+          "mean": 3565.7339948750014,
+          "median": 3497.8218695000396,
+          "p95": 4397.288079000078
+        }
+      },
+      "tokenUsage": {
+        "translation": {
+          "promptTokens": 1353,
+          "completionTokens": 4507,
+          "totalTokens": 5860,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "gloss": {
+          "promptTokens": 3801,
+          "completionTokens": 8818,
+          "totalTokens": 12619,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "grammar": {
+          "promptTokens": 1149,
+          "completionTokens": 6868,
+          "totalTokens": 8017,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        }
+      },
+      "judgeScores": {
+        "translation": {
+          "mean": 4.857142857142857,
+          "count": 14,
+          "disagreementMean": 0.3333333333333333,
+          "disagreementCount": 6,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 5,
+              "count": 6
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.75,
+              "count": 8
+            }
+          }
+        },
+        "gloss": {
+          "mean": 3.076923076923077,
+          "count": 13,
+          "disagreementMean": 0.8,
+          "disagreementCount": 5,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 3.2,
+              "count": 5
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 3,
+              "count": 8
+            }
+          }
+        },
+        "grammar": {
+          "mean": 4.5,
+          "count": 16,
+          "disagreementMean": 0.5,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.75,
+              "count": 8
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.25,
+              "count": 8
+            }
+          }
+        }
+      }
+    }
+  ]
+}

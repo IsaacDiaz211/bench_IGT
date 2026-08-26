@@ -1,0 +1,692 @@
+{
+  "runId": "20260813213251-2c6f7cd1",
+  "generatedAt": "2026-08-19T21:03:04.374Z",
+  "grandTotalCost": {
+    "amountUsd": 0.290042356,
+    "exactAmountUsd": 0.290042356,
+    "estimatedAmountUsd": 0,
+    "unknownCalls": 140,
+    "callCount": 609
+  },
+  "judgeTotalCost": {
+    "amountUsd": 0.148077431,
+    "exactAmountUsd": 0.148077431,
+    "estimatedAmountUsd": 0,
+    "unknownCalls": 140,
+    "callCount": 513
+  },
+  "candidateSummaries": [
+    {
+      "candidateModel": "inception/mercury-2",
+      "runCount": 8,
+      "candidateCost": {
+        "amountUsd": 0.025899524999999996,
+        "exactAmountUsd": 0.025899524999999996,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 0,
+        "callCount": 24
+      },
+      "judgeCost": {
+        "amountUsd": 0.03914610200000001,
+        "exactAmountUsd": 0.03914610200000001,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 33,
+        "callCount": 144
+      },
+      "totalCost": {
+        "amountUsd": 0.06504562700000001,
+        "exactAmountUsd": 0.06504562700000001,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 33,
+        "callCount": 168
+      },
+      "reliability": {
+        "translation": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "gloss": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "grammar": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        }
+      },
+      "latencyMs": {
+        "translation": {
+          "mean": 1583.1193352500486,
+          "median": 1530.2751565000508,
+          "p95": 2245.6142150000087
+        },
+        "gloss": {
+          "mean": 5802.605180999963,
+          "median": 5452.215849500033,
+          "p95": 9927.253583999816
+        },
+        "grammar": {
+          "mean": 2489.694232999973,
+          "median": 2860.404061999987,
+          "p95": 3680.38286100002
+        }
+      },
+      "tokenUsage": {
+        "translation": {
+          "promptTokens": 4072,
+          "completionTokens": 3612,
+          "totalTokens": 7684,
+          "cachedTokens": 1196,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "gloss": {
+          "promptTokens": 7902,
+          "completionTokens": 21657,
+          "totalTokens": 29559,
+          "cachedTokens": 1939,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "grammar": {
+          "promptTokens": 5093,
+          "completionTokens": 4991,
+          "totalTokens": 10084,
+          "cachedTokens": 1586,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        }
+      },
+      "judgeScores": {
+        "translation": {
+          "mean": 4.6288888888888895,
+          "count": 45,
+          "disagreementMean": 0.5875,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.6875,
+              "count": 8
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.3125,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 4.786363636363636,
+              "count": 22
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 4.428571428571429,
+              "count": 7
+            }
+          }
+        },
+        "gloss": {
+          "mean": 3.439473684210526,
+          "count": 38,
+          "disagreementMean": 1.8875000000000002,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 2.4857142857142853,
+              "count": 7
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 2.6875,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 4.094736842105263,
+              "count": 19
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 3.5,
+              "count": 4
+            }
+          }
+        },
+        "grammar": {
+          "mean": 4.410869565217391,
+          "count": 46,
+          "disagreementMean": 0.9375,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.237500000000001,
+              "count": 8
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 4.695652173913044,
+              "count": 23
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 4.142857142857143,
+              "count": 7
+            }
+          }
+        }
+      }
+    },
+    {
+      "candidateModel": "openai/gpt-5.6-luna:nitro",
+      "runCount": 8,
+      "candidateCost": {
+        "amountUsd": 0.007953499999999999,
+        "exactAmountUsd": 0.007953499999999999,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 0,
+        "callCount": 24
+      },
+      "judgeCost": {
+        "amountUsd": 0.033258140000000005,
+        "exactAmountUsd": 0.033258140000000005,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 34,
+        "callCount": 129
+      },
+      "totalCost": {
+        "amountUsd": 0.04121164000000001,
+        "exactAmountUsd": 0.04121164000000001,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 34,
+        "callCount": 153
+      },
+      "reliability": {
+        "translation": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "gloss": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "grammar": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        }
+      },
+      "latencyMs": {
+        "translation": {
+          "mean": 2462.930661875036,
+          "median": 2260.261086000013,
+          "p95": 3579.640213999999
+        },
+        "gloss": {
+          "mean": 8594.48350699999,
+          "median": 8581.390681499986,
+          "p95": 14950.529548000079
+        },
+        "grammar": {
+          "mean": 3978.1434589999817,
+          "median": 3781.8939404998964,
+          "p95": 5188.315299
+        }
+      },
+      "tokenUsage": {
+        "translation": {
+          "promptTokens": 1756,
+          "completionTokens": 1204,
+          "totalTokens": 2960,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "gloss": {
+          "promptTokens": 4532,
+          "completionTokens": 8655,
+          "totalTokens": 13187,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "grammar": {
+          "promptTokens": 1805,
+          "completionTokens": 2048,
+          "totalTokens": 3853,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        }
+      },
+      "judgeScores": {
+        "translation": {
+          "mean": 4.8325000000000005,
+          "count": 40,
+          "disagreementMean": 0.4,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.75,
+              "count": 6
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.75,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 4.933333333333334,
+              "count": 18
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 4.75,
+              "count": 8
+            }
+          }
+        },
+        "gloss": {
+          "mean": 3.630882352941176,
+          "count": 34,
+          "disagreementMean": 1.2,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 3.2,
+              "count": 4
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 2.875,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 3.980555555555555,
+              "count": 18
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 4,
+              "count": 4
+            }
+          }
+        },
+        "grammar": {
+          "mean": 4.597560975609756,
+          "count": 41,
+          "disagreementMean": 1,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.714285714285714,
+              "count": 7
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.125,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 4.916666666666667,
+              "count": 18
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 4.25,
+              "count": 8
+            }
+          }
+        }
+      }
+    },
+    {
+      "candidateModel": "google/gemini-3.7-flash:nitro",
+      "runCount": 8,
+      "candidateCost": {
+        "amountUsd": 0.08045100000000001,
+        "exactAmountUsd": 0.08045100000000001,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 0,
+        "callCount": 24
+      },
+      "judgeCost": {
+        "amountUsd": 0.03450909099999999,
+        "exactAmountUsd": 0.03450909099999999,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 40,
+        "callCount": 144
+      },
+      "totalCost": {
+        "amountUsd": 0.114960091,
+        "exactAmountUsd": 0.114960091,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 40,
+        "callCount": 168
+      },
+      "reliability": {
+        "translation": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "gloss": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "grammar": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        }
+      },
+      "latencyMs": {
+        "translation": {
+          "mean": 2598.668214749996,
+          "median": 2543.9273934998782,
+          "p95": 3373.5203029999975
+        },
+        "gloss": {
+          "mean": 3856.70768437504,
+          "median": 3603.7572550001787,
+          "p95": 5320.819688000018
+        },
+        "grammar": {
+          "mean": 3565.7339948750014,
+          "median": 3497.8218695000396,
+          "p95": 4397.288079000078
+        }
+      },
+      "tokenUsage": {
+        "translation": {
+          "promptTokens": 1353,
+          "completionTokens": 4507,
+          "totalTokens": 5860,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "gloss": {
+          "promptTokens": 3801,
+          "completionTokens": 8818,
+          "totalTokens": 12619,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "grammar": {
+          "promptTokens": 1149,
+          "completionTokens": 6868,
+          "totalTokens": 8017,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        }
+      },
+      "judgeScores": {
+        "translation": {
+          "mean": 4.853260869565218,
+          "count": 46,
+          "disagreementMean": 0.4375,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 5,
+              "count": 6
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.75,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 4.84375,
+              "count": 24
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 4.875,
+              "count": 8
+            }
+          }
+        },
+        "gloss": {
+          "mean": 3.5852941176470585,
+          "count": 34,
+          "disagreementMean": 1.6625,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 3.2,
+              "count": 5
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 3,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 3.93125,
+              "count": 16
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 3.8,
+              "count": 5
+            }
+          }
+        },
+        "grammar": {
+          "mean": 4.7555555555555555,
+          "count": 45,
+          "disagreementMean": 0.875,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.75,
+              "count": 8
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.25,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 5,
+              "count": 21
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 4.625,
+              "count": 8
+            }
+          }
+        }
+      }
+    },
+    {
+      "candidateModel": "google/gemini-3.5-flash-lite:nitro",
+      "runCount": 8,
+      "candidateCost": {
+        "amountUsd": 0.027660899999999995,
+        "exactAmountUsd": 0.027660899999999995,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 0,
+        "callCount": 24
+      },
+      "judgeCost": {
+        "amountUsd": 0.041164097999999996,
+        "exactAmountUsd": 0.041164097999999996,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 33,
+        "callCount": 96
+      },
+      "totalCost": {
+        "amountUsd": 0.068824998,
+        "exactAmountUsd": 0.068824998,
+        "estimatedAmountUsd": 0,
+        "unknownCalls": 33,
+        "callCount": 120
+      },
+      "reliability": {
+        "translation": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "gloss": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        },
+        "grammar": {
+          "validRate": 1,
+          "transportSuccessRate": 1,
+          "failedCalls": 0,
+          "timeoutCalls": 0,
+          "httpErrors": {}
+        }
+      },
+      "latencyMs": {
+        "translation": {
+          "mean": 1299.829423499999,
+          "median": 1221.4512830000021,
+          "p95": 2040.23189000017
+        },
+        "gloss": {
+          "mean": 3826.935352749994,
+          "median": 3882.835178999987,
+          "p95": 4655.58180299995
+        },
+        "grammar": {
+          "mean": 1808.6822635000358,
+          "median": 1720.0173065001145,
+          "p95": 2368.309506999998
+        }
+      },
+      "tokenUsage": {
+        "translation": {
+          "promptTokens": 1353,
+          "completionTokens": 822,
+          "totalTokens": 2175,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "gloss": {
+          "promptTokens": 3801,
+          "completionTokens": 8497,
+          "totalTokens": 12298,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        },
+        "grammar": {
+          "promptTokens": 1149,
+          "completionTokens": 989,
+          "totalTokens": 2138,
+          "cachedTokens": 0,
+          "cacheWriteTokens": 0,
+          "calls": 8,
+          "callsWithUsage": 8
+        }
+      },
+      "judgeScores": {
+        "translation": {
+          "mean": 4.543103448275862,
+          "count": 29,
+          "disagreementMean": 0.53125,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 4.4,
+              "count": 5
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 4.5,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 4.84375,
+              "count": 8
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 4.375,
+              "count": 8
+            }
+          }
+        },
+        "gloss": {
+          "mean": 2.9391304347826086,
+          "count": 23,
+          "disagreementMean": 0.85,
+          "disagreementCount": 8,
+          "byJudge": {
+            "openai/gpt-5.6-luna": {
+              "mean": 2.5714285714285716,
+              "count": 7
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 3.2285714285714286,
+              "count": 7
+            },
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 3,
+              "count": 5
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 3,
+              "count": 4
+            }
+          }
+        },
+        "grammar": {
+          "mean": 3.9451612903225803,
+          "count": 31,
+          "disagreementMean": 1.5,
+          "disagreementCount": 8,
+          "byJudge": {
+            "deepseek/deepseek-v4-flash-0731:nitro": {
+              "mean": 3.4285714285714284,
+              "count": 7
+            },
+            "openai/gpt-5.6-luna": {
+              "mean": 3.8125,
+              "count": 8
+            },
+            "dots-studio/dots-3-note-preview:free": {
+              "mean": 4.725,
+              "count": 8
+            },
+            "accounts/fireworks/models/kimi-k3": {
+              "mean": 3.75,
+              "count": 8
+            }
+          }
+        }
+      }
+    }
+  ]
+}

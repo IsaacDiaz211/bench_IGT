@@ -1,0 +1,2096 @@
+{
+  "schemaVersion": "1.0",
+  "status": "completed",
+  "runId": "20260813213251-2c6f7cd1",
+  "startedAt": "2026-08-13T21:32:51.869Z",
+  "datasetPath": "datasets/evaluation/english_red.jsonl",
+  "datasetCaseCount": 8,
+  "candidateModels": [
+    "inception/mercury-2",
+    "openai/gpt-5.6-luna:nitro",
+    "google/gemini-3.7-flash:nitro",
+    "google/gemini-3.5-flash-lite:nitro"
+  ],
+  "judgeModels": [
+    "deepseek/deepseek-v4-flash-0731:nitro",
+    "openai/gpt-5.6-luna",
+    "dots-studio/dots-3-note-preview:free"
+  ],
+  "repetitions": 1,
+  "seed": "bench-igt-v1",
+  "promptVersion": "app-compatible-v1",
+  "totalJobs": 32,
+  "pricing": [
+    {
+      "model": "google/gemini-3.7-flash",
+      "promptPerToken": 3.75e-7,
+      "completionPerToken": 0.000001875
+    },
+    {
+      "model": "google/gemini-3.7-flash:batch",
+      "promptPerToken": 1.875e-7,
+      "completionPerToken": 9.375e-7
+    },
+    {
+      "model": "bytedance-seed/seed-2-1-turbo",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "qwen/qwen3.8-2.4t-a95b",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "bytedance-seed/seed-2.0-code",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 0.000003
+    },
+    {
+      "model": "deepseek/deepseek-v4-pro-0813",
+      "promptPerToken": 6.6e-7,
+      "completionPerToken": 0.00000198
+    },
+    {
+      "model": "x-ai/grok-4.6",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "liquid/lfm-2.5-2.6b:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "nvidia/nemotron-3.5-lightning",
+      "promptPerToken": 8e-8,
+      "completionPerToken": 2e-7
+    },
+    {
+      "model": "nvidia/nemotron-3.5-lightning:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "sakana/sakana-namazu",
+      "promptPerToken": 9.5e-7,
+      "completionPerToken": 0.000004
+    },
+    {
+      "model": "upstage/solar-pro4",
+      "promptPerToken": 3e-8,
+      "completionPerToken": 1.2e-7
+    },
+    {
+      "model": "meta/muse-glimmer-30b",
+      "promptPerToken": 3.5e-7,
+      "completionPerToken": 0.0000015
+    },
+    {
+      "model": "meta/muse-spark-1.2",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.00000425
+    },
+    {
+      "model": "qwen/qwen3.8-max",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "~deepseek/deepseek-v4-flash-latest",
+      "promptPerToken": 6.03e-8,
+      "completionPerToken": 1.206e-7
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "promptPerToken": 1.4e-7,
+      "completionPerToken": 2.8e-7
+    },
+    {
+      "model": "thinkingmachines/inkling-small",
+      "promptPerToken": 4.5e-7,
+      "completionPerToken": 0.0000012
+    },
+    {
+      "model": "qwen/qwen3.7-flash",
+      "promptPerToken": 3e-8,
+      "completionPerToken": 1.3e-7
+    },
+    {
+      "model": "anthropic/claude-opus-5-fast",
+      "promptPerToken": 0.00001,
+      "completionPerToken": 0.00005
+    },
+    {
+      "model": "anthropic/claude-opus-5",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.000025
+    },
+    {
+      "model": "anthropic/claude-opus-5:batch",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.0000125
+    },
+    {
+      "model": "inclusionai/ling-3.0-flash",
+      "promptPerToken": 2.1e-8,
+      "completionPerToken": 6.3e-8
+    },
+    {
+      "model": "poolside/laguna-s-2.1",
+      "promptPerToken": 9e-8,
+      "completionPerToken": 1.8e-7
+    },
+    {
+      "model": "poolside/laguna-s-2.1:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "google/gemini-3.6-flash",
+      "promptPerToken": 7.5e-7,
+      "completionPerToken": 0.00000375
+    },
+    {
+      "model": "google/gemini-3.6-flash:batch",
+      "promptPerToken": 3.75e-7,
+      "completionPerToken": 0.000001875
+    },
+    {
+      "model": "google/gemini-3.5-flash-lite",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "google/gemini-3.5-flash-lite:batch",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 0.00000125
+    },
+    {
+      "model": "meituan/longcat-2.0",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000012
+    },
+    {
+      "model": "thinkingmachines/inkling",
+      "promptPerToken": 9.5e-7,
+      "completionPerToken": 0.00000405
+    },
+    {
+      "model": "thinkingmachines/inkling:batch",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 0.000002025
+    },
+    {
+      "model": "openrouter/auto-beta",
+      "promptPerToken": -1,
+      "completionPerToken": -1
+    },
+    {
+      "model": "moonshotai/kimi-k3",
+      "promptPerToken": 0.000003,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "meta/muse-spark-1.1",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.00000425
+    },
+    {
+      "model": "kwaipilot/kat-coder-air-v2.5",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "kwaipilot/kat-coder-pro-v2.5",
+      "promptPerToken": 7.4e-7,
+      "completionPerToken": 0.00000296
+    },
+    {
+      "model": "openai/gpt-5.6-luna-pro",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "openai/gpt-5.6-luna-pro:batch",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "openai/gpt-5.6-luna",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "openai/gpt-5.6-luna:batch",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "openai/gpt-5.6-terra-pro",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "openai/gpt-5.6-terra-pro:batch",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "openai/gpt-5.6-terra",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "openai/gpt-5.6-terra:batch",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "openai/gpt-5.6-sol-pro",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.00003
+    },
+    {
+      "model": "openai/gpt-5.6-sol-pro:batch",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "openai/gpt-5.6-sol",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.00003
+    },
+    {
+      "model": "openai/gpt-5.6-sol:batch",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "x-ai/grok-4.5",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "~x-ai/grok-latest",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "aion-labs/aion-3.0-mini",
+      "promptPerToken": 7e-7,
+      "completionPerToken": 0.0000014
+    },
+    {
+      "model": "aion-labs/aion-3.0",
+      "promptPerToken": 0.000003,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "tencent/hy3",
+      "promptPerToken": 1.32e-7,
+      "completionPerToken": 5.28e-7
+    },
+    {
+      "model": "poolside/laguna-xs-2.1",
+      "promptPerToken": 6e-8,
+      "completionPerToken": 1.2e-7
+    },
+    {
+      "model": "poolside/laguna-xs-2.1:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "anthropic/claude-sonnet-5",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "anthropic/claude-sonnet-5:batch",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000005
+    },
+    {
+      "model": "google/gemini-3.1-flash-lite-image",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 0.0000015
+    },
+    {
+      "model": "nex-agi/nex-n2-mini",
+      "promptPerToken": 2.5e-8,
+      "completionPerToken": 1e-7
+    },
+    {
+      "model": "sakana/fugu-ultra",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.00003
+    },
+    {
+      "model": "google/gemini-3.1-flash-image",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 0.000003
+    },
+    {
+      "model": "google/gemini-3-pro-image",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000012
+    },
+    {
+      "model": "cohere/north-mini-code:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "z-ai/glm-5.2",
+      "promptPerToken": 3.08e-7,
+      "completionPerToken": 9.68e-7
+    },
+    {
+      "model": "z-ai/glm-5.2:batch",
+      "promptPerToken": 7e-7,
+      "completionPerToken": 0.0000022
+    },
+    {
+      "model": "openrouter/fusion",
+      "promptPerToken": -1,
+      "completionPerToken": -1
+    },
+    {
+      "model": "moonshotai/kimi-k2.7-code",
+      "promptPerToken": 7.1e-7,
+      "completionPerToken": 0.0000035
+    },
+    {
+      "model": "moonshotai/kimi-k2.7-code:batch",
+      "promptPerToken": 4.75e-7,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "~anthropic/claude-fable-latest",
+      "promptPerToken": 0.00001,
+      "completionPerToken": 0.00005
+    },
+    {
+      "model": "anthropic/claude-fable-5",
+      "promptPerToken": 0.00001,
+      "completionPerToken": 0.00005
+    },
+    {
+      "model": "anthropic/claude-fable-5:batch",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.000025
+    },
+    {
+      "model": "nex-agi/nex-n2-pro",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 0.000001
+    },
+    {
+      "model": "nvidia/nemotron-3.5-content-safety:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "promptPerToken": 6e-7,
+      "completionPerToken": 0.0000036
+    },
+    {
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:batch",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000018
+    },
+    {
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "qwen/qwen3.7-plus",
+      "promptPerToken": 3.2e-7,
+      "completionPerToken": 0.00000128
+    },
+    {
+      "model": "minimax/minimax-m3",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000012
+    },
+    {
+      "model": "minimax/minimax-m3:batch",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "stepfun/step-3.7-flash",
+      "promptPerToken": 2e-7,
+      "completionPerToken": 0.00000115
+    },
+    {
+      "model": "anthropic/claude-opus-4.8-fast",
+      "promptPerToken": 0.00001,
+      "completionPerToken": 0.00005
+    },
+    {
+      "model": "anthropic/claude-opus-4.8",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.000025
+    },
+    {
+      "model": "anthropic/claude-opus-4.8:batch",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.0000125
+    },
+    {
+      "model": "qwen/qwen3.7-max",
+      "promptPerToken": 0.000001475,
+      "completionPerToken": 0.000004425
+    },
+    {
+      "model": "x-ai/grok-build-0.1",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "google/gemini-3.5-flash",
+      "promptPerToken": 0.0000015,
+      "completionPerToken": 0.000009
+    },
+    {
+      "model": "google/gemini-3.5-flash:batch",
+      "promptPerToken": 7.5e-7,
+      "completionPerToken": 0.0000045
+    },
+    {
+      "model": "anthropic/claude-opus-4.7-fast",
+      "promptPerToken": 0.00003,
+      "completionPerToken": 0.00015
+    },
+    {
+      "model": "perceptron/perceptron-mk1",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 0.0000015
+    },
+    {
+      "model": "inclusionai/ring-2.6-1t",
+      "promptPerToken": 7.5e-8,
+      "completionPerToken": 6.25e-7
+    },
+    {
+      "model": "google/gemini-3.1-flash-lite",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 0.0000015
+    },
+    {
+      "model": "google/gemini-3.1-flash-lite:batch",
+      "promptPerToken": 1.25e-7,
+      "completionPerToken": 7.5e-7
+    },
+    {
+      "model": "openai/gpt-chat-latest",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.00003
+    },
+    {
+      "model": "x-ai/grok-4.3",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "ibm-granite/granite-4.1-8b",
+      "promptPerToken": 5e-8,
+      "completionPerToken": 1e-7
+    },
+    {
+      "model": "mistralai/mistral-medium-3-5",
+      "promptPerToken": 0.0000015,
+      "completionPerToken": 0.0000075
+    },
+    {
+      "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "~anthropic/claude-haiku-latest",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000005
+    },
+    {
+      "model": "~openai/gpt-mini-latest",
+      "promptPerToken": 7.5e-7,
+      "completionPerToken": 0.0000045
+    },
+    {
+      "model": "~google/gemini-pro-latest",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000012
+    },
+    {
+      "model": "~moonshotai/kimi-latest",
+      "promptPerToken": 0.0000028,
+      "completionPerToken": 0.000014
+    },
+    {
+      "model": "~google/gemini-flash-latest",
+      "promptPerToken": 3.75e-7,
+      "completionPerToken": 0.000001875
+    },
+    {
+      "model": "~anthropic/claude-sonnet-latest",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "~openai/gpt-latest",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.00003
+    },
+    {
+      "model": "qwen/qwen3.5-plus-20260420",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000018
+    },
+    {
+      "model": "qwen/qwen3.6-flash",
+      "promptPerToken": 1.875e-7,
+      "completionPerToken": 0.000001125
+    },
+    {
+      "model": "qwen/qwen3.6-35b-a3b",
+      "promptPerToken": 1.4e-7,
+      "completionPerToken": 0.000001
+    },
+    {
+      "model": "qwen/qwen3.6-max-preview",
+      "promptPerToken": 0.000001027,
+      "completionPerToken": 0.000006162
+    },
+    {
+      "model": "qwen/qwen3.6-27b",
+      "promptPerToken": 2.89e-7,
+      "completionPerToken": 0.0000024
+    },
+    {
+      "model": "openai/gpt-5.5-pro",
+      "promptPerToken": 0.00003,
+      "completionPerToken": 0.00018
+    },
+    {
+      "model": "openai/gpt-5.5-pro:batch",
+      "promptPerToken": 0.000015,
+      "completionPerToken": 0.00009
+    },
+    {
+      "model": "openai/gpt-5.5",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.00003
+    },
+    {
+      "model": "openai/gpt-5.5:batch",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "deepseek/deepseek-v4-pro",
+      "promptPerToken": 0.000001168,
+      "completionPerToken": 0.000002336
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "promptPerToken": 5.866e-8,
+      "completionPerToken": 1.1732e-7
+    },
+    {
+      "model": "inclusionai/ling-2.6-1t",
+      "promptPerToken": 7.5e-8,
+      "completionPerToken": 6.25e-7
+    },
+    {
+      "model": "tencent/hy3-preview",
+      "promptPerToken": 1.8e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "xiaomi/mimo-v2.5-pro",
+      "promptPerToken": 4.35e-7,
+      "completionPerToken": 8.7e-7
+    },
+    {
+      "model": "xiaomi/mimo-v2.5",
+      "promptPerToken": 1.4e-7,
+      "completionPerToken": 2.8e-7
+    },
+    {
+      "model": "openai/gpt-5.4-image-2",
+      "promptPerToken": 0.000008,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "inclusionai/ling-2.6-flash",
+      "promptPerToken": 1e-8,
+      "completionPerToken": 3e-8
+    },
+    {
+      "model": "~anthropic/claude-opus-latest",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.000025
+    },
+    {
+      "model": "openrouter/pareto-code",
+      "promptPerToken": -1,
+      "completionPerToken": -1
+    },
+    {
+      "model": "moonshotai/kimi-k2.6",
+      "promptPerToken": 5.415e-7,
+      "completionPerToken": 0.00000228
+    },
+    {
+      "model": "anthropic/claude-opus-4.7",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.000025
+    },
+    {
+      "model": "anthropic/claude-opus-4.7:batch",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.0000125
+    },
+    {
+      "model": "z-ai/glm-5.1",
+      "promptPerToken": 9.66e-7,
+      "completionPerToken": 0.000003036
+    },
+    {
+      "model": "google/gemma-4-26b-a4b-it",
+      "promptPerToken": 7e-8,
+      "completionPerToken": 3.4e-7
+    },
+    {
+      "model": "google/gemma-4-26b-a4b-it:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "google/gemma-4-31b-it",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 3.4e-7
+    },
+    {
+      "model": "google/gemma-4-31b-it:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "qwen/qwen3.6-plus",
+      "promptPerToken": 3.25e-7,
+      "completionPerToken": 0.00000195
+    },
+    {
+      "model": "z-ai/glm-5v-turbo",
+      "promptPerToken": 0.0000012,
+      "completionPerToken": 0.000004
+    },
+    {
+      "model": "arcee-ai/trinity-large-thinking",
+      "promptPerToken": 2.2e-7,
+      "completionPerToken": 8.5e-7
+    },
+    {
+      "model": "x-ai/grok-4.20-multi-agent",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "x-ai/grok-4.20",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "google/lyria-3-pro-preview",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "google/lyria-3-clip-preview",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "kwaipilot/kat-coder-pro-v2",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000012
+    },
+    {
+      "model": "rekaai/reka-edge",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 1e-7
+    },
+    {
+      "model": "minimax/minimax-m2.7",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000012
+    },
+    {
+      "model": "openai/gpt-5.4-nano",
+      "promptPerToken": 2e-7,
+      "completionPerToken": 0.00000125
+    },
+    {
+      "model": "openai/gpt-5.4-nano:batch",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 6.25e-7
+    },
+    {
+      "model": "openai/gpt-5.4-mini",
+      "promptPerToken": 7.5e-7,
+      "completionPerToken": 0.0000045
+    },
+    {
+      "model": "openai/gpt-5.4-mini:batch",
+      "promptPerToken": 3.75e-7,
+      "completionPerToken": 0.00000225
+    },
+    {
+      "model": "mistralai/mistral-small-2603",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "z-ai/glm-5-turbo",
+      "promptPerToken": 0.0000012,
+      "completionPerToken": 0.000004
+    },
+    {
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "promptPerToken": 8.5e-8,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "nvidia/nemotron-3-super-120b-a12b:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "bytedance-seed/seed-2.0-lite",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "qwen/qwen3.5-9b",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 1.5e-7
+    },
+    {
+      "model": "openai/gpt-5.4-pro",
+      "promptPerToken": 0.00003,
+      "completionPerToken": 0.00018
+    },
+    {
+      "model": "openai/gpt-5.4-pro:batch",
+      "promptPerToken": 0.000015,
+      "completionPerToken": 0.00009
+    },
+    {
+      "model": "openai/gpt-5.4",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "openai/gpt-5.4:batch",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.0000075
+    },
+    {
+      "model": "inception/mercury-2",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 7.5e-7
+    },
+    {
+      "model": "google/gemini-3.1-flash-lite-preview",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 0.0000015
+    },
+    {
+      "model": "bytedance-seed/seed-2.0-mini",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "google/gemini-3.1-flash-image-preview",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 0.000003
+    },
+    {
+      "model": "qwen/qwen3.5-35b-a3b",
+      "promptPerToken": 2.25e-7,
+      "completionPerToken": 0.0000018
+    },
+    {
+      "model": "qwen/qwen3.5-27b",
+      "promptPerToken": 1.95e-7,
+      "completionPerToken": 0.00000156
+    },
+    {
+      "model": "qwen/qwen3.5-122b-a10b",
+      "promptPerToken": 2.9e-7,
+      "completionPerToken": 0.0000024
+    },
+    {
+      "model": "qwen/qwen3.5-flash-02-23",
+      "promptPerToken": 6.5e-8,
+      "completionPerToken": 2.6e-7
+    },
+    {
+      "model": "google/gemini-3.1-pro-preview-customtools",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000012
+    },
+    {
+      "model": "openai/gpt-5.3-codex",
+      "promptPerToken": 0.00000175,
+      "completionPerToken": 0.000014
+    },
+    {
+      "model": "aion-labs/aion-2.0",
+      "promptPerToken": 8e-7,
+      "completionPerToken": 0.0000016
+    },
+    {
+      "model": "google/gemini-3.1-pro-preview",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000012
+    },
+    {
+      "model": "google/gemini-3.1-pro-preview:batch",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "anthropic/claude-sonnet-4.6",
+      "promptPerToken": 0.000003,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "anthropic/claude-sonnet-4.6:batch",
+      "promptPerToken": 0.0000015,
+      "completionPerToken": 0.0000075
+    },
+    {
+      "model": "qwen/qwen3.5-plus-02-15",
+      "promptPerToken": 2.6e-7,
+      "completionPerToken": 0.00000156
+    },
+    {
+      "model": "qwen/qwen3.5-397b-a17b",
+      "promptPerToken": 3.9e-7,
+      "completionPerToken": 0.00000234
+    },
+    {
+      "model": "minimax/minimax-m2.5",
+      "promptPerToken": 2.2e-7,
+      "completionPerToken": 9e-7
+    },
+    {
+      "model": "z-ai/glm-5",
+      "promptPerToken": 6e-7,
+      "completionPerToken": 0.00000192
+    },
+    {
+      "model": "qwen/qwen3-max-thinking",
+      "promptPerToken": 7.8e-7,
+      "completionPerToken": 0.0000039
+    },
+    {
+      "model": "anthropic/claude-opus-4.6",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.000025
+    },
+    {
+      "model": "anthropic/claude-opus-4.6:batch",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.0000125
+    },
+    {
+      "model": "qwen/qwen3-coder-next",
+      "promptPerToken": 1.2e-7,
+      "completionPerToken": 8e-7
+    },
+    {
+      "model": "openrouter/free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "stepfun/step-3.5-flash",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 3e-7
+    },
+    {
+      "model": "moonshotai/kimi-k2.5",
+      "promptPerToken": 5.7e-7,
+      "completionPerToken": 0.00000285
+    },
+    {
+      "model": "upstage/solar-pro-3",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "minimax/minimax-m2-her",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000012
+    },
+    {
+      "model": "writer/palmyra-x5",
+      "promptPerToken": 6e-7,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "openai/gpt-audio",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "openai/gpt-audio-mini",
+      "promptPerToken": 6e-7,
+      "completionPerToken": 0.0000024
+    },
+    {
+      "model": "z-ai/glm-4.7-flash",
+      "promptPerToken": 6e-8,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "openai/gpt-5.2-codex",
+      "promptPerToken": 0.00000175,
+      "completionPerToken": 0.000014
+    },
+    {
+      "model": "bytedance-seed/seed-1.6-flash",
+      "promptPerToken": 7.5e-8,
+      "completionPerToken": 3e-7
+    },
+    {
+      "model": "bytedance-seed/seed-1.6",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "minimax/minimax-m2.1",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000012
+    },
+    {
+      "model": "z-ai/glm-4.7",
+      "promptPerToken": 4e-7,
+      "completionPerToken": 0.00000175
+    },
+    {
+      "model": "google/gemini-3-flash-preview",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 0.000003
+    },
+    {
+      "model": "google/gemini-3-flash-preview:batch",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 0.0000015
+    },
+    {
+      "model": "nvidia/nemotron-3-nano-30b-a3b",
+      "promptPerToken": 5e-8,
+      "completionPerToken": 2e-7
+    },
+    {
+      "model": "nvidia/nemotron-3-nano-30b-a3b:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "openai/gpt-5.2-chat",
+      "promptPerToken": 0.00000175,
+      "completionPerToken": 0.000014
+    },
+    {
+      "model": "openai/gpt-5.2-pro",
+      "promptPerToken": 0.000021,
+      "completionPerToken": 0.000168
+    },
+    {
+      "model": "openai/gpt-5.2-pro:batch",
+      "promptPerToken": 0.0000105,
+      "completionPerToken": 0.000084
+    },
+    {
+      "model": "openai/gpt-5.2",
+      "promptPerToken": 0.00000175,
+      "completionPerToken": 0.000014
+    },
+    {
+      "model": "openai/gpt-5.2:batch",
+      "promptPerToken": 8.75e-7,
+      "completionPerToken": 0.000007
+    },
+    {
+      "model": "relace/relace-search",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000003
+    },
+    {
+      "model": "z-ai/glm-4.6v",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 9e-7
+    },
+    {
+      "model": "openrouter/bodybuilder",
+      "promptPerToken": -1,
+      "completionPerToken": -1
+    },
+    {
+      "model": "openai/gpt-5.1-codex-max",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "amazon/nova-2-lite-v1",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "mistralai/ministral-14b-2512",
+      "promptPerToken": 2e-7,
+      "completionPerToken": 2e-7
+    },
+    {
+      "model": "mistralai/ministral-8b-2512",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 1.5e-7
+    },
+    {
+      "model": "mistralai/ministral-3b-2512",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 1e-7
+    },
+    {
+      "model": "mistralai/mistral-large-2512",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 0.0000015
+    },
+    {
+      "model": "deepseek/deepseek-v3.2",
+      "promptPerToken": 2.69e-7,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "anthropic/claude-opus-4.5",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.000025
+    },
+    {
+      "model": "anthropic/claude-opus-4.5:batch",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.0000125
+    },
+    {
+      "model": "allenai/olmo-3-32b-think",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 5e-7
+    },
+    {
+      "model": "google/gemini-3-pro-image-preview",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000012
+    },
+    {
+      "model": "deepcogito/cogito-v2.1-671b",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.00000125
+    },
+    {
+      "model": "openai/gpt-5.1",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "openai/gpt-5.1:batch",
+      "promptPerToken": 6.25e-7,
+      "completionPerToken": 0.000005
+    },
+    {
+      "model": "openai/gpt-5.1-codex",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "openai/gpt-5.1-codex-mini",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "moonshotai/kimi-k2-thinking",
+      "promptPerToken": 6e-7,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "amazon/nova-premier-v1",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.0000125
+    },
+    {
+      "model": "perplexity/sonar-pro-search",
+      "promptPerToken": 0.000003,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "mistralai/voxtral-small-24b-2507",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 3e-7
+    },
+    {
+      "model": "openai/gpt-oss-safeguard-20b",
+      "promptPerToken": 7.5e-8,
+      "completionPerToken": 3e-7
+    },
+    {
+      "model": "nvidia/nemotron-nano-12b-v2-vl:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "minimax/minimax-m2",
+      "promptPerToken": 2.55e-7,
+      "completionPerToken": 0.00000102
+    },
+    {
+      "model": "qwen/qwen3-vl-32b-instruct",
+      "promptPerToken": 1.04e-7,
+      "completionPerToken": 4.16e-7
+    },
+    {
+      "model": "ibm-granite/granite-4.0-h-micro",
+      "promptPerToken": 1.7e-8,
+      "completionPerToken": 1.12e-7
+    },
+    {
+      "model": "openai/gpt-5-image-mini",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "anthropic/claude-haiku-4.5",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000005
+    },
+    {
+      "model": "anthropic/claude-haiku-4.5:batch",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "qwen/qwen3-vl-8b-thinking",
+      "promptPerToken": 1.8e-7,
+      "completionPerToken": 0.0000021
+    },
+    {
+      "model": "qwen/qwen3-vl-8b-instruct",
+      "promptPerToken": 1.17e-7,
+      "completionPerToken": 4.55e-7
+    },
+    {
+      "model": "openai/gpt-5-image",
+      "promptPerToken": 0.00001,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "google/gemini-2.5-flash-image",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "qwen/qwen3-vl-30b-a3b-thinking",
+      "promptPerToken": 2e-7,
+      "completionPerToken": 0.0000024
+    },
+    {
+      "model": "qwen/qwen3-vl-30b-a3b-instruct",
+      "promptPerToken": 1.3e-7,
+      "completionPerToken": 5.2e-7
+    },
+    {
+      "model": "openai/gpt-5-pro",
+      "promptPerToken": 0.000015,
+      "completionPerToken": 0.00012
+    },
+    {
+      "model": "openai/gpt-5-pro:batch",
+      "promptPerToken": 0.0000075,
+      "completionPerToken": 0.00006
+    },
+    {
+      "model": "z-ai/glm-4.6",
+      "promptPerToken": 5.5e-7,
+      "completionPerToken": 0.0000022
+    },
+    {
+      "model": "anthropic/claude-sonnet-4.5",
+      "promptPerToken": 0.000003,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "anthropic/claude-sonnet-4.5:batch",
+      "promptPerToken": 0.0000015,
+      "completionPerToken": 0.0000075
+    },
+    {
+      "model": "deepseek/deepseek-v3.2-exp",
+      "promptPerToken": 2.7e-7,
+      "completionPerToken": 4.1e-7
+    },
+    {
+      "model": "thedrummer/cydonia-24b-v4.1",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 5e-7
+    },
+    {
+      "model": "relace/relace-apply-3",
+      "promptPerToken": 8.5e-7,
+      "completionPerToken": 0.00000125
+    },
+    {
+      "model": "qwen/qwen3-vl-235b-a22b-thinking",
+      "promptPerToken": 4e-7,
+      "completionPerToken": 0.000004
+    },
+    {
+      "model": "qwen/qwen3-vl-235b-a22b-instruct",
+      "promptPerToken": 2.6e-7,
+      "completionPerToken": 0.00000104
+    },
+    {
+      "model": "qwen/qwen3-max",
+      "promptPerToken": 7.8e-7,
+      "completionPerToken": 0.0000039
+    },
+    {
+      "model": "qwen/qwen3-coder-plus",
+      "promptPerToken": 6.5e-7,
+      "completionPerToken": 0.00000325
+    },
+    {
+      "model": "openai/gpt-5-codex:batch",
+      "promptPerToken": 6.25e-7,
+      "completionPerToken": 0.000005
+    },
+    {
+      "model": "deepseek/deepseek-v3.1-terminus",
+      "promptPerToken": 2.7e-7,
+      "completionPerToken": 9.5e-7
+    },
+    {
+      "model": "qwen/qwen3-coder-flash",
+      "promptPerToken": 1.95e-7,
+      "completionPerToken": 9.75e-7
+    },
+    {
+      "model": "qwen/qwen3-next-80b-a3b-thinking",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 0.0000012
+    },
+    {
+      "model": "qwen/qwen3-next-80b-a3b-instruct",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 0.0000011
+    },
+    {
+      "model": "qwen/qwen-plus-2025-07-28",
+      "promptPerToken": 2.6e-7,
+      "completionPerToken": 7.8e-7
+    },
+    {
+      "model": "qwen/qwen-plus-2025-07-28:thinking",
+      "promptPerToken": 2.6e-7,
+      "completionPerToken": 7.8e-7
+    },
+    {
+      "model": "nvidia/nemotron-nano-9b-v2:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "moonshotai/kimi-k2-0905",
+      "promptPerToken": 6e-7,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "qwen/qwen3-30b-a3b-thinking-2507",
+      "promptPerToken": 2e-7,
+      "completionPerToken": 0.0000024
+    },
+    {
+      "model": "nousresearch/hermes-4-70b",
+      "promptPerToken": 1.3e-7,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "nousresearch/hermes-4-405b",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000003
+    },
+    {
+      "model": "deepseek/deepseek-chat-v3.1",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 9.5e-7
+    },
+    {
+      "model": "mistralai/mistral-medium-3.1",
+      "promptPerToken": 4e-7,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "z-ai/glm-4.5v",
+      "promptPerToken": 6e-7,
+      "completionPerToken": 0.0000018
+    },
+    {
+      "model": "ai21/jamba-large-1.7",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000008
+    },
+    {
+      "model": "openai/gpt-5",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "openai/gpt-5:batch",
+      "promptPerToken": 6.25e-7,
+      "completionPerToken": 0.000005
+    },
+    {
+      "model": "openai/gpt-5-mini",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "openai/gpt-5-mini:batch",
+      "promptPerToken": 1.25e-7,
+      "completionPerToken": 0.000001
+    },
+    {
+      "model": "openai/gpt-5-nano",
+      "promptPerToken": 5e-8,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "openai/gpt-5-nano:batch",
+      "promptPerToken": 2.5e-8,
+      "completionPerToken": 2e-7
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "promptPerToken": 3e-8,
+      "completionPerToken": 1.7e-7
+    },
+    {
+      "model": "openai/gpt-oss-20b",
+      "promptPerToken": 3e-8,
+      "completionPerToken": 1.3e-7
+    },
+    {
+      "model": "openai/gpt-oss-20b:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "anthropic/claude-opus-4.1",
+      "promptPerToken": 0.000015,
+      "completionPerToken": 0.000075
+    },
+    {
+      "model": "anthropic/claude-opus-4.1:batch",
+      "promptPerToken": 0.0000075,
+      "completionPerToken": 0.0000375
+    },
+    {
+      "model": "mistralai/codestral-2508",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 9e-7
+    },
+    {
+      "model": "qwen/qwen3-coder-30b-a3b-instruct",
+      "promptPerToken": 7e-8,
+      "completionPerToken": 2.8e-7
+    },
+    {
+      "model": "qwen/qwen3-30b-a3b-instruct-2507",
+      "promptPerToken": 4.815e-8,
+      "completionPerToken": 1.9305e-7
+    },
+    {
+      "model": "z-ai/glm-4.5",
+      "promptPerToken": 6e-7,
+      "completionPerToken": 0.0000022
+    },
+    {
+      "model": "z-ai/glm-4.5-air",
+      "promptPerToken": 1.3e-7,
+      "completionPerToken": 8.5e-7
+    },
+    {
+      "model": "qwen/qwen3-235b-a22b-thinking-2507",
+      "promptPerToken": 2.3e-7,
+      "completionPerToken": 0.0000023
+    },
+    {
+      "model": "qwen/qwen3-coder",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.000001
+    },
+    {
+      "model": "bytedance/ui-tars-1.5-7b",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 2e-7
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite:batch",
+      "promptPerToken": 5e-8,
+      "completionPerToken": 2e-7
+    },
+    {
+      "model": "qwen/qwen3-235b-a22b-2507",
+      "promptPerToken": 9e-8,
+      "completionPerToken": 5.5e-7
+    },
+    {
+      "model": "moonshotai/kimi-k2",
+      "promptPerToken": 5.7e-7,
+      "completionPerToken": 0.0000023
+    },
+    {
+      "model": "cognitivecomputations/dolphin-mistral-24b-venice-edition",
+      "promptPerToken": 2e-7,
+      "completionPerToken": 9e-7
+    },
+    {
+      "model": "tencent/hunyuan-a13b-instruct",
+      "promptPerToken": 1.4e-7,
+      "completionPerToken": 5.7e-7
+    },
+    {
+      "model": "morph/morph-v3-large",
+      "promptPerToken": 9e-7,
+      "completionPerToken": 0.0000019
+    },
+    {
+      "model": "morph/morph-v3-fast",
+      "promptPerToken": 8e-7,
+      "completionPerToken": 0.0000012
+    },
+    {
+      "model": "baidu/ernie-4.5-vl-424b-a47b",
+      "promptPerToken": 4.2e-7,
+      "completionPerToken": 0.00000125
+    },
+    {
+      "model": "mistralai/mistral-small-3.2-24b-instruct",
+      "promptPerToken": 9.375e-8,
+      "completionPerToken": 2.5e-7
+    },
+    {
+      "model": "minimax/minimax-m1",
+      "promptPerToken": 5.5e-7,
+      "completionPerToken": 0.0000022
+    },
+    {
+      "model": "google/gemini-2.5-flash",
+      "promptPerToken": 3e-7,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "google/gemini-2.5-flash:batch",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 0.00000125
+    },
+    {
+      "model": "google/gemini-2.5-pro",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "google/gemini-2.5-pro:batch",
+      "promptPerToken": 6.25e-7,
+      "completionPerToken": 0.000005
+    },
+    {
+      "model": "openai/o3-pro",
+      "promptPerToken": 0.00002,
+      "completionPerToken": 0.00008
+    },
+    {
+      "model": "openai/o3-pro:batch",
+      "promptPerToken": 0.00001,
+      "completionPerToken": 0.00004
+    },
+    {
+      "model": "google/gemini-2.5-pro-preview",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "deepseek/deepseek-r1-0528",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 0.00000215
+    },
+    {
+      "model": "anthropic/claude-opus-4",
+      "promptPerToken": 0.000015,
+      "completionPerToken": 0.000075
+    },
+    {
+      "model": "anthropic/claude-sonnet-4",
+      "promptPerToken": 0.000003,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "google/gemma-3n-e4b-it",
+      "promptPerToken": 6e-8,
+      "completionPerToken": 1.2e-7
+    },
+    {
+      "model": "mistralai/mistral-medium-3",
+      "promptPerToken": 4e-7,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "google/gemini-2.5-pro-preview-05-06",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "arcee-ai/virtuoso-large",
+      "promptPerToken": 7.5e-7,
+      "completionPerToken": 0.0000012
+    },
+    {
+      "model": "meta-llama/llama-guard-4-12b",
+      "promptPerToken": 1.8e-7,
+      "completionPerToken": 1.8e-7
+    },
+    {
+      "model": "qwen/qwen3-30b-a3b",
+      "promptPerToken": 1.3e-7,
+      "completionPerToken": 5.2e-7
+    },
+    {
+      "model": "qwen/qwen3-8b",
+      "promptPerToken": 1.17e-7,
+      "completionPerToken": 4.55e-7
+    },
+    {
+      "model": "qwen/qwen3-14b",
+      "promptPerToken": 1.2e-7,
+      "completionPerToken": 2.4e-7
+    },
+    {
+      "model": "qwen/qwen3-32b",
+      "promptPerToken": 8e-8,
+      "completionPerToken": 2.8e-7
+    },
+    {
+      "model": "qwen/qwen3-235b-a22b",
+      "promptPerToken": 4.55e-7,
+      "completionPerToken": 0.00000182
+    },
+    {
+      "model": "openai/o4-mini-high",
+      "promptPerToken": 0.0000011,
+      "completionPerToken": 0.0000044
+    },
+    {
+      "model": "openai/o4-mini-high:batch",
+      "promptPerToken": 5.5e-7,
+      "completionPerToken": 0.0000022
+    },
+    {
+      "model": "openai/o3",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000008
+    },
+    {
+      "model": "openai/o3:batch",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000004
+    },
+    {
+      "model": "openai/o4-mini",
+      "promptPerToken": 0.0000011,
+      "completionPerToken": 0.0000044
+    },
+    {
+      "model": "openai/o4-mini:batch",
+      "promptPerToken": 5.5e-7,
+      "completionPerToken": 0.0000022
+    },
+    {
+      "model": "openai/gpt-4.1",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000008
+    },
+    {
+      "model": "openai/gpt-4.1:batch",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000004
+    },
+    {
+      "model": "openai/gpt-4.1-mini",
+      "promptPerToken": 4e-7,
+      "completionPerToken": 0.0000016
+    },
+    {
+      "model": "openai/gpt-4.1-mini:batch",
+      "promptPerToken": 2e-7,
+      "completionPerToken": 8e-7
+    },
+    {
+      "model": "openai/gpt-4.1-nano",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "openai/gpt-4.1-nano:batch",
+      "promptPerToken": 5e-8,
+      "completionPerToken": 2e-7
+    },
+    {
+      "model": "meta-llama/llama-4-maverick",
+      "promptPerToken": 2e-7,
+      "completionPerToken": 8e-7
+    },
+    {
+      "model": "meta-llama/llama-4-scout",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 3e-7
+    },
+    {
+      "model": "deepseek/deepseek-chat-v3-0324",
+      "promptPerToken": 2.7e-7,
+      "completionPerToken": 0.00000112
+    },
+    {
+      "model": "openai/o1-pro",
+      "promptPerToken": 0.00015,
+      "completionPerToken": 0.0006
+    },
+    {
+      "model": "openai/o1-pro:batch",
+      "promptPerToken": 0.000075,
+      "completionPerToken": 0.0003
+    },
+    {
+      "model": "mistralai/mistral-small-3.1-24b-instruct",
+      "promptPerToken": 3.51e-7,
+      "completionPerToken": 5.55e-7
+    },
+    {
+      "model": "google/gemma-3-4b-it",
+      "promptPerToken": 5e-8,
+      "completionPerToken": 1e-7
+    },
+    {
+      "model": "google/gemma-3-12b-it",
+      "promptPerToken": 5e-8,
+      "completionPerToken": 1.5e-7
+    },
+    {
+      "model": "cohere/command-a",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "rekaai/reka-flash-3",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 2e-7
+    },
+    {
+      "model": "google/gemma-3-27b-it",
+      "promptPerToken": 8e-8,
+      "completionPerToken": 4.5e-7
+    },
+    {
+      "model": "thedrummer/skyfall-36b-v2",
+      "promptPerToken": 5.5e-7,
+      "completionPerToken": 8e-7
+    },
+    {
+      "model": "perplexity/sonar-reasoning-pro",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000008
+    },
+    {
+      "model": "perplexity/sonar-pro",
+      "promptPerToken": 0.000003,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "perplexity/sonar-deep-research",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000008
+    },
+    {
+      "model": "mistralai/mistral-saba",
+      "promptPerToken": 2e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "openai/o3-mini-high",
+      "promptPerToken": 0.0000011,
+      "completionPerToken": 0.0000044
+    },
+    {
+      "model": "openai/o3-mini-high:batch",
+      "promptPerToken": 5.5e-7,
+      "completionPerToken": 0.0000022
+    },
+    {
+      "model": "aion-labs/aion-rp-llama-3.1-8b",
+      "promptPerToken": 8e-7,
+      "completionPerToken": 0.0000016
+    },
+    {
+      "model": "qwen/qwen2.5-vl-72b-instruct",
+      "promptPerToken": 8e-7,
+      "completionPerToken": 0.000001
+    },
+    {
+      "model": "qwen/qwen-plus",
+      "promptPerToken": 2.6e-7,
+      "completionPerToken": 7.8e-7
+    },
+    {
+      "model": "openai/o3-mini",
+      "promptPerToken": 0.0000011,
+      "completionPerToken": 0.0000044
+    },
+    {
+      "model": "openai/o3-mini:batch",
+      "promptPerToken": 5.5e-7,
+      "completionPerToken": 0.0000022
+    },
+    {
+      "model": "mistralai/mistral-small-24b-instruct-2501",
+      "promptPerToken": 5e-8,
+      "completionPerToken": 8e-8
+    },
+    {
+      "model": "perplexity/sonar",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000001
+    },
+    {
+      "model": "deepseek/deepseek-r1-distill-llama-70b",
+      "promptPerToken": 8e-7,
+      "completionPerToken": 8e-7
+    },
+    {
+      "model": "deepseek/deepseek-r1",
+      "promptPerToken": 7e-7,
+      "completionPerToken": 0.0000025
+    },
+    {
+      "model": "minimax/minimax-01",
+      "promptPerToken": 2e-7,
+      "completionPerToken": 0.0000011
+    },
+    {
+      "model": "microsoft/phi-4",
+      "promptPerToken": 7e-8,
+      "completionPerToken": 1.4e-7
+    },
+    {
+      "model": "deepseek/deepseek-chat",
+      "promptPerToken": 2.574e-7,
+      "completionPerToken": 0.0000010287
+    },
+    {
+      "model": "sao10k/l3.3-euryale-70b",
+      "promptPerToken": 6.5e-7,
+      "completionPerToken": 7.5e-7
+    },
+    {
+      "model": "openai/o1",
+      "promptPerToken": 0.000015,
+      "completionPerToken": 0.00006
+    },
+    {
+      "model": "openai/o1:batch",
+      "promptPerToken": 0.0000075,
+      "completionPerToken": 0.00003
+    },
+    {
+      "model": "cohere/command-r7b-12-2024",
+      "promptPerToken": 3.75e-8,
+      "completionPerToken": 1.5e-7
+    },
+    {
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 3.2e-7
+    },
+    {
+      "model": "amazon/nova-lite-v1",
+      "promptPerToken": 6e-8,
+      "completionPerToken": 2.4e-7
+    },
+    {
+      "model": "amazon/nova-micro-v1",
+      "promptPerToken": 3.5e-8,
+      "completionPerToken": 1.4e-7
+    },
+    {
+      "model": "amazon/nova-pro-v1",
+      "promptPerToken": 8e-7,
+      "completionPerToken": 0.0000032
+    },
+    {
+      "model": "openai/gpt-4o-2024-11-20",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "mistralai/mistral-large-2407",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "qwen/qwen-2.5-coder-32b-instruct",
+      "promptPerToken": 6.6e-7,
+      "completionPerToken": 0.000001
+    },
+    {
+      "model": "thedrummer/unslopnemo-12b",
+      "promptPerToken": 4e-7,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "anthracite-org/magnum-v4-72b",
+      "promptPerToken": 0.000003,
+      "completionPerToken": 0.000005
+    },
+    {
+      "model": "qwen/qwen-2.5-7b-instruct",
+      "promptPerToken": 1e-7,
+      "completionPerToken": 2e-7
+    },
+    {
+      "model": "thedrummer/rocinante-12b",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 5e-7
+    },
+    {
+      "model": "meta-llama/llama-3.2-1b-instruct",
+      "promptPerToken": 2.7e-8,
+      "completionPerToken": 2.01e-7
+    },
+    {
+      "model": "meta-llama/llama-3.2-3b-instruct",
+      "promptPerToken": 5e-8,
+      "completionPerToken": 3.3e-7
+    },
+    {
+      "model": "qwen/qwen-2.5-72b-instruct",
+      "promptPerToken": 3.6e-7,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "cohere/command-r-08-2024",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "cohere/command-r-plus-08-2024",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "sao10k/l3.1-euryale-70b",
+      "promptPerToken": 8.5e-7,
+      "completionPerToken": 8.5e-7
+    },
+    {
+      "model": "nousresearch/hermes-3-llama-3.1-70b",
+      "promptPerToken": 7e-7,
+      "completionPerToken": 7e-7
+    },
+    {
+      "model": "nousresearch/hermes-3-llama-3.1-405b",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000001
+    },
+    {
+      "model": "sao10k/l3-lunaris-8b",
+      "promptPerToken": 4e-8,
+      "completionPerToken": 5e-8
+    },
+    {
+      "model": "openai/gpt-4o-2024-08-06",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "meta-llama/llama-3.1-70b-instruct",
+      "promptPerToken": 4e-7,
+      "completionPerToken": 4e-7
+    },
+    {
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "promptPerToken": 5e-8,
+      "completionPerToken": 8e-8
+    },
+    {
+      "model": "mistralai/mistral-nemo",
+      "promptPerToken": 1.9e-8,
+      "completionPerToken": 3e-8
+    },
+    {
+      "model": "openai/gpt-4o-mini",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "openai/gpt-4o-mini-2024-07-18",
+      "promptPerToken": 1.5e-7,
+      "completionPerToken": 6e-7
+    },
+    {
+      "model": "openai/gpt-4o-mini:batch",
+      "promptPerToken": 7.5e-8,
+      "completionPerToken": 3e-7
+    },
+    {
+      "model": "google/gemma-2-27b-it",
+      "promptPerToken": 6.5e-7,
+      "completionPerToken": 6.5e-7
+    },
+    {
+      "model": "openai/gpt-4o",
+      "promptPerToken": 0.0000025,
+      "completionPerToken": 0.00001
+    },
+    {
+      "model": "openai/gpt-4o-2024-05-13",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "openai/gpt-4o:batch",
+      "promptPerToken": 0.00000125,
+      "completionPerToken": 0.000005
+    },
+    {
+      "model": "mistralai/mixtral-8x22b-instruct",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "microsoft/wizardlm-2-8x22b",
+      "promptPerToken": 6.2e-7,
+      "completionPerToken": 6.2e-7
+    },
+    {
+      "model": "openai/gpt-4-turbo",
+      "promptPerToken": 0.00001,
+      "completionPerToken": 0.00003
+    },
+    {
+      "model": "openai/gpt-4-turbo:batch",
+      "promptPerToken": 0.000005,
+      "completionPerToken": 0.000015
+    },
+    {
+      "model": "anthropic/claude-3-haiku",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 0.00000125
+    },
+    {
+      "model": "mistralai/mistral-large",
+      "promptPerToken": 0.000002,
+      "completionPerToken": 0.000006
+    },
+    {
+      "model": "openai/gpt-3.5-turbo-0613",
+      "promptPerToken": 0.000001,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "openai/gpt-4-turbo-preview",
+      "promptPerToken": 0.00001,
+      "completionPerToken": 0.00003
+    },
+    {
+      "model": "openrouter/auto",
+      "promptPerToken": -1,
+      "completionPerToken": -1
+    },
+    {
+      "model": "openai/gpt-3.5-turbo-instruct",
+      "promptPerToken": 0.0000015,
+      "completionPerToken": 0.000002
+    },
+    {
+      "model": "openai/gpt-3.5-turbo-16k",
+      "promptPerToken": 0.000003,
+      "completionPerToken": 0.000004
+    },
+    {
+      "model": "mancer/weaver",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 7.5e-7
+    },
+    {
+      "model": "undi95/remm-slerp-l2-13b",
+      "promptPerToken": 4.5e-7,
+      "completionPerToken": 6.5e-7
+    },
+    {
+      "model": "gryphe/mythomax-l2-13b",
+      "promptPerToken": 6e-8,
+      "completionPerToken": 6e-8
+    },
+    {
+      "model": "openai/gpt-3.5-turbo",
+      "promptPerToken": 5e-7,
+      "completionPerToken": 0.0000015
+    },
+    {
+      "model": "openai/gpt-3.5-turbo:batch",
+      "promptPerToken": 2.5e-7,
+      "completionPerToken": 7.5e-7
+    },
+    {
+      "model": "openai/gpt-4",
+      "promptPerToken": 0.00003,
+      "completionPerToken": 0.00006
+    },
+    {
+      "model": "qwen/qwen3.8-27b",
+      "promptPerToken": 4.5e-7,
+      "completionPerToken": 0.0000032
+    },
+    {
+      "model": "dots-studio/dots-3-note-preview:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    },
+    {
+      "model": "z-ai/glm-5.2:free",
+      "promptPerToken": 0,
+      "completionPerToken": 0
+    }
+  ],
+  "endedAt": "2026-08-16T23:54:24.631Z"
+}
