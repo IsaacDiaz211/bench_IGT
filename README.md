@@ -1,7 +1,7 @@
 # bench_IGT
 
 Benchmark independiente para comparar modelos de OpenRouter en las tareas que
-generan el contenido lingüístico de la aplicación móvil Leyéndolo:
+generan el contenido lingüístico de la aplicación móvil [Leyéndolo](https://play.google.com/store/apps/details?id=com.chejov.leyendolo)
 
 - Traducción natural.
 - Glosas morfológicas compatibles con el formato de la aplicación.
@@ -21,8 +21,6 @@ experiencia de usuario en la aplicación real.
   la calidad y el coste propios de cada candidato.
 - Después de la comparación individual se podrá simular una cadena de fallback
   para estimar el comportamiento de una configuración de producción.
-- DeepSeek Flash v4-0731 y GPT5.6-Luna se usarán como jueces de calidad, no como
-  modelos candidatos.
 
 La especificación completa está en
 [`docs/benchmark-spec.md`](docs/benchmark-spec.md).
@@ -45,8 +43,7 @@ aplicarán umbrales de calidad y fiabilidad antes de comparar latencia y coste.
 
 ## Relación con la aplicación
 
-La referencia funcional está en el proyecto hermano
-[`ravenToPandas`](../ravenToPandas). En particular:
+En particular:
 
 - `services/OpenRouterTranslation.ts` define los prompts, esquemas y validación
   de traducción, glosa y gramática.
@@ -145,7 +142,7 @@ pnpm validate-dataset -- --dataset tests/fixtures/cases.jsonl
 ## Estado
 
 El primer flujo ejecutable está implementado. Los corpus inglés y chino están
-disponibles como JSONL de evaluación; falta definir la lista final de modelos.
+disponibles como JSONL de evaluación.
 
 ## Estructura prevista
 

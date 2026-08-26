@@ -1,9 +1,11 @@
 import { cp } from 'node:fs/promises';
 import { join } from 'node:path';
+import { getProviderForModel } from '../core/config.ts';
 import type { BenchmarkRun } from '../core/types.ts';
 import { runWithConcurrency } from '../core/utils.ts';
 import { loadDataset } from '../dataset/loader.ts';
 import { loadPersistedRun, RunStore } from '../execution/run-store.ts';
+import type { FireworksClient } from '../fireworks/client.ts';
 import type { OpenRouterClient } from '../openrouter/client.ts';
 import { buildReport, renderMarkdownReport } from '../reports/report.ts';
 import { PROMPT_VERSION } from '../stages/prompts.ts';
@@ -31,10 +33,48 @@ const slugify = (model: string): string => {
 
 const unique = (models: readonly string[]): string[] => [...new Set(models)];
 
+type JudgeClients =
+  | OpenRouterClient
+  | FireworksClient
+  | { openrouter: OpenRouterClient; fireworks?: FireworksClient };
+
+const isClientsObject = (
+  value: unknown,
+): value is { openrouter: OpenRouterClient; fireworks?: FireworksClient } => {
+  return (
+    !!value &&
+    typeof value === 'object' &&
+    'openrouter' in (value as Record<string, unknown>) &&
+    (value as { openrouter: unknown }).openrouter !== undefined
+  );
+};
+
+const getJudgeClient = (
+  clients: JudgeClients,
+  model: string,
+): OpenRouterClient | FireworksClient => {
+  const provider = getProviderForModel(model);
+  if (isClientsObject(clients)) {
+    if (provider === 'fireworks') {
+      if (!clients.fireworks) {
+        throw new Error(`Falta FIREWORKS_API_KEY para el juez ${model}.`);
+      }
+      return clients.fireworks;
+    }
+    return clients.openrouter;
+  }
+  if (provider === 'fireworks') {
+    throw new Error(
+      `Falta FIREWORKS_API_KEY para el juez ${model}. Configura FIREWORKS_API_KEY o usa un cliente Fireworks.`,
+    );
+  }
+  return clients as OpenRouterClient | FireworksClient;
+};
+
 export const addJudgesToRun = async (
   sourceDirectory: string,
   options: AddJudgesOptions,
-  client: OpenRouterClient,
+  client: JudgeClients,
 ): Promise<AddJudgesResult> => {
   const sourceRun = await loadPersistedRun(sourceDirectory);
   const dataset = await loadDataset(sourceRun.datasetPath);
@@ -67,16 +107,60 @@ export const addJudgesToRun = async (
   await store.addJudgeModels(addedJudges);
 
   const pricingByModel = new Map(sourceRun.pricing.map((item) => [item.model, item]));
-  const freshPricing = await client.loadPricing().catch((error: unknown) => {
-    console.warn(
-      `No se pudo cargar el catálogo de precios: ${error instanceof Error ? error.message : error}`,
-    );
-    return [];
-  });
-  for (const item of freshPricing) {
-    pricingByModel.set(item.model, item);
-  }
-  client.setPricing([...pricingByModel.values()]);
+
+  const loadPricingForClients = async (): Promise<void> => {
+    if (isClientsObject(client)) {
+      const needsOpenrouter = addedJudges.some((m) => getProviderForModel(m) === 'openrouter');
+      const needsFireworks = addedJudges.some((m) => getProviderForModel(m) === 'fireworks');
+
+      if (needsOpenrouter) {
+        const openrouterPricing = await client.openrouter.loadPricing().catch((error: unknown) => {
+          console.warn(
+            `No se pudo cargar el catálogo de precios OpenRouter: ${error instanceof Error ? error.message : error}`,
+          );
+          return [];
+        });
+        for (const item of openrouterPricing) {
+          pricingByModel.set(item.model, item);
+        }
+        client.openrouter.setPricing([...pricingByModel.values()]);
+      }
+
+      if (needsFireworks && client.fireworks) {
+        const fireworksPricing = await client.fireworks.loadPricing().catch((error: unknown) => {
+          console.warn(
+            `No se pudo cargar el catálogo de precios Fireworks: ${error instanceof Error ? error.message : error}`,
+          );
+          return [];
+        });
+        for (const item of fireworksPricing) {
+          pricingByModel.set(item.model, item);
+        }
+        client.fireworks.setPricing([...pricingByModel.values()]);
+      }
+
+      if (needsOpenrouter && needsFireworks) {
+        // Ensure both clients share the merged pricing map
+        client.openrouter.setPricing([...pricingByModel.values()]);
+        client.fireworks?.setPricing([...pricingByModel.values()]);
+      }
+    } else {
+      const freshPricing = await (client as OpenRouterClient | FireworksClient)
+        .loadPricing()
+        .catch((error: unknown) => {
+          console.warn(
+            `No se pudo cargar el catálogo de precios: ${error instanceof Error ? error.message : error}`,
+          );
+          return [];
+        });
+      for (const item of freshPricing) {
+        pricingByModel.set(item.model, item);
+      }
+      (client as OpenRouterClient | FireworksClient).setPricing([...pricingByModel.values()]);
+    }
+  };
+
+  await loadPricingForClients();
   await store.setPricing([...pricingByModel.values()]);
 
   if (sourceRun.promptVersion !== PROMPT_VERSION) {
@@ -86,6 +170,7 @@ export const addJudgesToRun = async (
   }
 
   let judgeCallCount = 0;
+  const getClient = (model: string) => getJudgeClient(client, model);
   await runWithConcurrency(
     sourceRun.candidateRuns,
     options.concurrency ?? 1,
@@ -95,7 +180,7 @@ export const addJudgesToRun = async (
         throw new Error(`El dataset no contiene el caso ${candidateRun.caseId}.`);
       }
       const records = await judgeCandidateRun(
-        client,
+        getClient,
         benchmarkCase,
         candidateRun,
         addedJudges,

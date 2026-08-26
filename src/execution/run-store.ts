@@ -49,6 +49,7 @@ const toJsonLine = (value: unknown): string => `${JSON.stringify(value)}\n`;
 const callMetadata = (call: CallResult): Record<string, unknown> => ({
   callId: call.callId,
   actor: call.actor,
+  provider: call.provider,
   model: call.model,
   evaluatedModel: call.evaluatedModel,
   caseId: call.caseId,

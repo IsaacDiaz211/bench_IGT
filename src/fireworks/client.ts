@@ -1,21 +1,18 @@
 import type {
   CallActor,
   CallResult,
-  GenerationMetadata,
   JsonObject,
   JsonValue,
   ModelPricing,
   Stage,
   UsageSnapshot,
 } from '../core/types.ts';
-import { asJsonValue, asNonEmptyString, asNumber, isRecord, sleep } from '../core/utils.ts';
-import type { JsonSchema } from './schemas.ts';
+import { asJsonValue, asNonEmptyString, asNumber, isRecord } from '../core/utils.ts';
+import type { JsonSchema } from '../openrouter/schemas.ts';
 
-interface OpenRouterClientConfig {
+interface FireworksClientConfig {
   apiKey: string;
   baseUrl: string;
-  httpReferer: string;
-  appTitle: string;
   timeoutMs: number;
 }
 
@@ -85,21 +82,7 @@ const readErrorMessage = (body: unknown, status: number): string => {
     return body.trim().slice(0, 500);
   }
 
-  return `OpenRouter HTTP ${status}`;
-};
-
-const extractGenerationId = (response: Response, body: unknown): string | undefined => {
-  const fromHeader =
-    response.headers.get('x-openrouter-generation-id') ?? response.headers.get('x-generation-id');
-  if (fromHeader?.trim()) {
-    return fromHeader.trim();
-  }
-
-  if (isRecord(body)) {
-    return asNonEmptyString(body.generation_id) ?? asNonEmptyString(body.id);
-  }
-
-  return undefined;
+  return `Fireworks HTTP ${status}`;
 };
 
 const extractUsage = (body: unknown): UsageSnapshot => {
@@ -141,27 +124,6 @@ const extractUsage = (body: unknown): UsageSnapshot => {
   };
 };
 
-const extractGenerationMetadata = (value: unknown): GenerationMetadata | undefined => {
-  const data = isRecord(value) && isRecord(value.data) ? value.data : value;
-  if (!isRecord(data)) {
-    return undefined;
-  }
-
-  const metadata: GenerationMetadata = {
-    id: asNonEmptyString(data.id),
-    model: asNonEmptyString(data.model),
-    providerName: asNonEmptyString(data.provider_name) ?? asNonEmptyString(data.providerName),
-    totalCostUsd: firstNumber(data.total_cost, data.totalCost, data.cost),
-    latencyMs: firstNumber(data.latency),
-    generationTimeMs: firstNumber(data.generation_time, data.generationTime),
-    finishReason: asNonEmptyString(data.finish_reason) ?? asNonEmptyString(data.finishReason),
-    nativeFinishReason:
-      asNonEmptyString(data.native_finish_reason) ?? asNonEmptyString(data.nativeFinishReason),
-  };
-
-  return Object.values(metadata).some((item) => item !== undefined) ? metadata : undefined;
-};
-
 const parsePricing = (model: ModelCatalogEntry): ModelPricing | undefined => {
   const id = asNonEmptyString(model.id);
   if (!id || !isRecord(model.pricing)) {
@@ -183,7 +145,6 @@ const makeRequestBody = (input: CompleteInput): JsonObject => ({
     type: 'json_schema',
     json_schema: {
       name: input.schemaName,
-      strict: true,
       schema: input.schema,
     },
   },
@@ -193,13 +154,13 @@ const makeRequestBody = (input: CompleteInput): JsonObject => ({
   ],
 });
 
-export class OpenRouterClient {
-  private readonly config: OpenRouterClientConfig;
+export class FireworksClient {
+  private readonly config: FireworksClientConfig;
   private readonly pricing = new Map<string, ModelPricing>();
 
-  public constructor(config: OpenRouterClientConfig) {
+  public constructor(config: FireworksClientConfig) {
     if (!config.apiKey) {
-      throw new Error('Falta OPENROUTER_API_KEY.');
+      throw new Error('Falta FIREWORKS_API_KEY.');
     }
 
     this.config = config;
@@ -223,7 +184,7 @@ export class OpenRouterClient {
     }
 
     if (!isRecord(response.body) || !Array.isArray(response.body.data)) {
-      throw new Error('OpenRouter devolvió un catálogo de modelos inválido.');
+      throw new Error('Fireworks devolvió un catálogo de modelos inválido.');
     }
 
     return response.body.data;
@@ -247,10 +208,8 @@ export class OpenRouterClient {
     let messageContent: JsonValue | undefined;
     let status: number | undefined;
     let usage: UsageSnapshot = {};
-    let generation: GenerationMetadata | undefined;
     let error: string | undefined;
     let ok = false;
-    let statsLookupMs = 0;
 
     try {
       const response = await this.fetchJson(`${this.config.baseUrl}/chat/completions`, {
@@ -267,13 +226,7 @@ export class OpenRouterClient {
         error = readErrorMessage(response.body, response.status);
       } else {
         ok = true;
-        const generationId = extractGenerationId(response.response, response.body);
-        if (generationId) {
-          const statsStartedAt = performance.now();
-          generation = await this.getGenerationMetadata(generationId);
-          statsLookupMs = performance.now() - statsStartedAt;
-        }
-        usage = this.withResolvedCost(input.model, usage, generation);
+        usage = this.withResolvedCost(input.model, usage);
       }
     } catch (caughtError) {
       error = caughtError instanceof Error ? caughtError.message : 'Error desconocido de red.';
@@ -283,7 +236,7 @@ export class OpenRouterClient {
     return {
       callId,
       actor: input.actor,
-      provider: 'openrouter',
+      provider: 'fireworks',
       model: input.model,
       evaluatedModel: input.evaluatedModel,
       caseId: input.caseId,
@@ -292,8 +245,8 @@ export class OpenRouterClient {
       repetition: input.repetition,
       startedAt,
       endedAt,
-      latencyMs: performance.now() - startedAtMs - statsLookupMs,
-      statsLookupMs,
+      latencyMs: performance.now() - startedAtMs,
+      statsLookupMs: 0,
       ok,
       status,
       requestBody,
@@ -301,24 +254,15 @@ export class OpenRouterClient {
       messageContent,
       error,
       usage,
-      generation,
+      generation: undefined,
     };
   }
 
   private headers(): Record<string, string> {
-    const headers: Record<string, string> = {
+    return {
       Authorization: `Bearer ${this.config.apiKey}`,
       'Content-Type': 'application/json',
     };
-
-    if (this.config.httpReferer) {
-      headers['HTTP-Referer'] = this.config.httpReferer;
-    }
-    if (this.config.appTitle) {
-      headers['X-Title'] = this.config.appTitle;
-    }
-
-    return headers;
   }
 
   private async fetchJson(
@@ -347,52 +291,7 @@ export class OpenRouterClient {
     }
   }
 
-  private async getGenerationMetadata(
-    generationId: string,
-  ): Promise<GenerationMetadata | undefined> {
-    for (const delay of [0, 250, 750]) {
-      if (delay) {
-        await sleep(delay);
-      }
-
-      try {
-        const response = await this.fetchJson(
-          `${this.config.baseUrl}/generation?id=${encodeURIComponent(generationId)}`,
-          {
-            method: 'GET',
-            headers: this.headers(),
-          },
-        );
-        if (response.ok) {
-          const metadata = extractGenerationMetadata(response.body);
-          if (metadata) {
-            return metadata;
-          }
-        }
-      } catch {
-        // The response usage or pricing catalogue remains available as fallback.
-      }
-    }
-
-    return undefined;
-  }
-
-  private withResolvedCost(
-    model: string,
-    usage: UsageSnapshot,
-    generation: GenerationMetadata | undefined,
-  ): UsageSnapshot {
-    const generationCost = generation?.totalCostUsd;
-    if (generationCost !== undefined) {
-      return {
-        ...usage,
-        promptTokens: usage.promptTokens ?? undefined,
-        costUsd: generationCost,
-        costSource: 'generation_metadata',
-        costEstimated: false,
-      };
-    }
-
+  private withResolvedCost(model: string, usage: UsageSnapshot): UsageSnapshot {
     if (usage.costUsd !== undefined) {
       return {
         ...usage,

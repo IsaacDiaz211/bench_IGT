@@ -6,6 +6,9 @@ export interface AppConfig {
   httpReferer: string;
   appTitle: string;
   timeoutMs: number;
+  fireworksApiKey: string;
+  fireworksBaseUrl: string;
+  fireworksTimeoutMs: number;
   datasetPath: string;
   models: string[];
   judges: string[];
@@ -50,6 +53,14 @@ export const parseModelList = (value: string | undefined): string[] => {
     .filter(Boolean);
 };
 
+export const isFireworksModel = (model: string): boolean => {
+  return model.startsWith('accounts/');
+};
+
+export const getProviderForModel = (model: string): 'openrouter' | 'fireworks' => {
+  return isFireworksModel(model) ? 'fireworks' : 'openrouter';
+};
+
 export const loadConfig = (overrides: ConfigOverrides = {}): AppConfig => {
   const apiKey = readString('OPENROUTER_API_KEY');
 
@@ -59,6 +70,12 @@ export const loadConfig = (overrides: ConfigOverrides = {}): AppConfig => {
     httpReferer: readString('OPENROUTER_HTTP_REFERER'),
     appTitle: readString('OPENROUTER_APP_TITLE', 'bench_IGT'),
     timeoutMs: readPositiveInteger('OPENROUTER_TIMEOUT_MS', 40_000),
+    fireworksApiKey: readString('FIREWORKS_API_KEY'),
+    fireworksBaseUrl: readString(
+      'FIREWORKS_BASE_URL',
+      'https://api.fireworks.ai/inference/v1',
+    ).replace(/\/+$/, ''),
+    fireworksTimeoutMs: readPositiveInteger('FIREWORKS_TIMEOUT_MS', 40_000),
     datasetPath:
       overrides.datasetPath ?? readString('BENCHMARK_DATASET', 'datasets/smoke/cases.jsonl'),
     models: overrides.models ?? readList('BENCHMARK_MODELS'),

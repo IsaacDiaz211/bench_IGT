@@ -60,6 +60,7 @@ export interface GenerationMetadata {
 export interface CallResult {
   callId: string;
   actor: CallActor;
+  provider?: string;
   model: string;
   evaluatedModel: string;
   caseId: string;

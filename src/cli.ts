@@ -1,9 +1,10 @@
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { addCandidatesToRun } from './candidates/backfill.ts';
-import { loadConfig, parseModelList } from './core/config.ts';
+import { getProviderForModel, loadConfig, parseModelList } from './core/config.ts';
 import { loadDataset } from './dataset/loader.ts';
 import { runBenchmark, writeReportForRun } from './execution/runner.ts';
+import { FireworksClient } from './fireworks/client.ts';
 import { addJudgesToRun } from './judges/backfill.ts';
 import { OpenRouterClient } from './openrouter/client.ts';
 
@@ -121,14 +122,23 @@ const run = async (): Promise<void> => {
       throw new Error('add-judge requiere --judges <modelos adicionales>.');
     }
     const config = loadConfig();
-    const client = new OpenRouterClient(config);
+    const openrouter = new OpenRouterClient(config);
+    const needsFireworks = judgeModels.some((m) => getProviderForModel(m) === 'fireworks');
+    const fireworks = needsFireworks
+      ? new FireworksClient({
+          apiKey: config.fireworksApiKey,
+          baseUrl: config.fireworksBaseUrl,
+          timeoutMs: config.fireworksTimeoutMs,
+        })
+      : undefined;
+    const clients = needsFireworks && fireworks ? { openrouter, fireworks } : openrouter;
     const directory = runPath.endsWith('.json') ? join(runPath, '..') : runPath;
     const concurrency =
       parsePositiveInteger(cli.values.concurrency, '--concurrency') ?? config.concurrency;
     const result = await addJudgesToRun(
       directory,
       { judgeModels, outputDir: cli.values.output, concurrency },
-      client,
+      clients as unknown as Parameters<typeof addJudgesToRun>[2],
     );
     console.log(`Jueces añadidos: ${result.addedJudges.join(', ')}`);
     if (result.skippedJudges.length) {
@@ -150,14 +160,29 @@ const run = async (): Promise<void> => {
       throw new Error('add-candidate requiere --models <modelos adicionales>.');
     }
     const config = loadConfig();
-    const client = new OpenRouterClient(config);
+    const openrouter = new OpenRouterClient(config);
+    // If the source run already contains fireworks judges, we need fireworks client to evaluate them.
+    // Instantiate lazily if key exists.
+    let fireworks: FireworksClient | undefined;
+    if (config.fireworksApiKey) {
+      try {
+        fireworks = new FireworksClient({
+          apiKey: config.fireworksApiKey,
+          baseUrl: config.fireworksBaseUrl,
+          timeoutMs: config.fireworksTimeoutMs,
+        });
+      } catch {
+        fireworks = undefined;
+      }
+    }
+    const clients = fireworks ? { openrouter, fireworks } : openrouter;
     const directory = runPath.endsWith('.json') ? join(runPath, '..') : runPath;
     const concurrency =
       parsePositiveInteger(cli.values.concurrency, '--concurrency') ?? config.concurrency;
     const result = await addCandidatesToRun(
       directory,
       { candidateModels, outputDir: cli.values.output, concurrency },
-      client,
+      clients as unknown as Parameters<typeof addCandidatesToRun>[2],
     );
     console.log(`Candidatos añadidos: ${result.addedCandidates.join(', ')}`);
     if (result.skippedCandidates.length) {
